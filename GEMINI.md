@@ -11,3 +11,14 @@
 - **PBR Specular Integrity**: Preserve crisp metallic reflections and specular highlights without flat 2D washout.
 - **Deep Contrast**: Keep perimeter backgrounds in velvety pure black (`#000000`) with diffuse, accumulating light trail ribbons and soft chromatic shadows rather than flat tinted walls.
 - **Multi-Track Color Signatures**: Automatically adapt spotlight hues and diffuse trail colors based on the track's musical key (`dominant_pitch_class`), energy, and brightness.
+
+## 3. Project Architecture & Workspace Aliases
+- **DPE (`DEFMAIN_PLATFORM_ENGINE`)**:
+  - **Directory**: `/Users/dmm/Documents/Defmain_Platform_Root`
+  - **Git Branch**: `DEFMAIN_PLATFORM_ENGINE` (Remote: `origin/DEFMAIN_PLATFORM_ENGINE`)
+  - **Purpose**: Internal in-house label operations (`SRC_Records`, `Neural_State_Sound`), active releases, credentials, and custom Notion selector dossiers.
+- **DCC (`DEFMAIN_COMMERCIAL_CORE`)**:
+  - **Directory**: `/Users/dmm/Documents/DEFMAIN_COMMERCIAL_CORE`
+  - **Git Branch**: `DEFMAIN_COMMERCIAL_CORE` (Remote: `origin/DEFMAIN_COMMERCIAL_CORE`)
+  - **Purpose**: Standalone, white-label commercial core product, agnostic pipeline, and visual playground.
+
