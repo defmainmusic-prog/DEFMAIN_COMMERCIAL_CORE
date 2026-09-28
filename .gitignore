@@ -1,0 +1,14 @@
+.env
+google_creds.json
+.DS_Store
+__pycache__/
+*.pyc
+token.json
+operations/
+creative_vault/
+*.wav
+*.aif
+*.aiff
+*.flac
+*.mp3
+*.mp4

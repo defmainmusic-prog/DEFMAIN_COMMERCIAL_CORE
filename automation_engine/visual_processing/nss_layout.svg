@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 3000" width="3000" height="3000">
+
+  <text x="250" y="2400" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_1 }}" fill="#ffffff" text-anchor="start" letter-spacing="-2">{{ ARTIST }}</text>
+  <text x="250" y="2540" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_2 }}" fill="#ffffff" text-anchor="start" letter-spacing="-2">{{ TITLE }}</text>
+
+  <line x1="250" y1="2650" x2="2750" y2="2650" stroke="#ffffff" stroke-width="2"/>
+
+  <text x="250" y="2800" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="55" fill="#ffffff" text-anchor="start">CATALOG: {{ CATALOG_ID }}</text>
+  
+  <line x1="925" y1="2651" x2="925" y2="2805" stroke="#ffffff" stroke-width="3"/>
+
+  <text x="960" y="2800" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="55" fill="#ffffff" text-anchor="start">NEURAL_STATE_SOUND</text>
+
+  <line x1="1525" y1="2651" x2="1525" y2="2805" stroke="#ffffff" stroke-width="4"/>
+
+  <text x="1560" y="2800" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="55" fill="#ffffff" text-anchor="start">CENTRALIZED_MGMT_DEFMAIN_PLATFORM</text>
+</svg>

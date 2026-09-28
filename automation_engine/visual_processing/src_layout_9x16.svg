@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1080 1920" width="1080" height="1920">
+  <defs>
+    <!-- Top scrim gradient for typography readability -->
+    <linearGradient id="topScrim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.0" />
+    </linearGradient>
+    
+    <!-- Subtle fade gradient for grid / UI overlays -->
+    <linearGradient id="fadeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02" />
+    </linearGradient>
+    
+    <!-- Dot pattern for tech background grid -->
+    <pattern id="dotPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+      <circle cx="25" cy="25" r="1.0" fill="#ffffff" opacity="0.12" />
+    </pattern>
+  </defs>
+
+  <!-- 1. Top Readability Scrim Overlay -->
+  <rect x="0" y="0" width="1080" height="350" fill="url(#topScrim)" />
+
+  <!-- 2. Background Grid Pattern Overlay (In safe area) -->
+  <rect x="40" y="100" width="1000" height="1620" fill="url(#dotPattern)" />
+
+  <!-- 3. Tech Frame HUD Corners (In safe area: y=100 to y=1720) -->
+  <!-- Outer Border Frame with low opacity -->
+  <rect x="40" y="100" width="1000" height="1620" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.1" />
+  
+  <!-- Outer Accent Corner Brackets -->
+  <path d="M 100 100 L 40 100 L 40 160" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.6" />
+  <path d="M 980 100 L 1040 100 L 1040 160" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.6" />
+  <path d="M 100 1720 L 40 1720 L 40 1660" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.6" />
+  <path d="M 980 1720 L 1040 1720 L 1040 1660" stroke="#ffffff" stroke-width="4" fill="none" opacity="0.6" />
+
+  <!-- 4. Top-Right Schematic Tech Info Block (Shifted down for 100px top buffer) -->
+  <g transform="translate(865, 140)" opacity="0.75">
+    <text x="0" y="0" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" fill="#ffffff" text-anchor="end">SYS_OP : SRC_CODE_V2.8</text>
+    <text x="0" y="22" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" fill="#ffffff" text-anchor="end">STATUS : ACTIVATED</text>
+    <text x="0" y="44" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" fill="#ffffff" text-anchor="end">SIGNAL : LOCKED</text>
+    <text x="0" y="66" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" fill="#ffffff" text-anchor="end">DEPLOYMENT : INITIALIZED</text>
+    <!-- Tiny crosshair decal -->
+    <path d="M -170 15 L -155 15 M -162 8 L -162 22" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.3" />
+  </g>
+
+  <!-- 5. Logo Graphic Card (Top-Right, aligned with text top edge, y shifted to 130) -->
+  <image xlink:href="data:image/png;base64,{{ LOGO_DATA }}" x="880" y="130" width="80" height="80" />
+
+  <!-- 6. Metadata Headers (repositioned to sit close to the new safe-buffered footer) -->
+  <!-- Shadow Layers -->
+  <text x="82" y="1572" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_1 }}" fill="#000000" opacity="0.75" text-anchor="start" letter-spacing="-2">{{ ARTIST }}</text>
+  <text x="82" y="1637" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_2 }}" fill="#000000" opacity="0.75" text-anchor="start" letter-spacing="-2">{{ TITLE }}</text>
+
+  <!-- Main Text Layers -->
+  <text x="80" y="1570" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_1 }}" fill="#ffffff" text-anchor="start" letter-spacing="-2">{{ ARTIST }}</text>
+  <text x="80" y="1635" font-family="'Space Grotesk', sans-serif" font-weight="900" font-size="{{ FONT_SIZE_2 }}" fill="#ffffff" text-anchor="start" letter-spacing="-2">{{ TITLE }}</text>
+
+  <!-- 7. Dividers & Metadata Footer (Aligned with bottom line of safe area corner symbol y=1700, fill changed to #b0bbc5) -->
+  <text x="80" y="1700" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="20" fill="#b0bbc5" text-anchor="start">CATALOG: {{ CATALOG_ID }}</text>
+  
+  <line x1="310" y1="1678" x2="310" y2="1700" stroke="#b0bbc5" stroke-width="1.5" opacity="0.5"/>
+
+  <text x="325" y="1700" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="20" fill="#b0bbc5" text-anchor="start">SRC_RECORDS</text>
+  
+  <line x1="550" y1="1678" x2="550" y2="1700" stroke="#b0bbc5" stroke-width="1.5" opacity="0.5"/>
+
+  <text x="565" y="1700" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="20" fill="#b0bbc5" text-anchor="start">CENTRALIZED_MGMT_DEFMAIN_PLATFORM</text>
+</svg>
