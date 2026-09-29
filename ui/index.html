@@ -34,7 +34,7 @@
               amber: '#f59e0b',
               emerald: '#10b981',
               cyan: '#06b6d4',
-              crimson: '#ef4444',
+              indigo: '#6366f1',
             }
           }
         }
@@ -75,7 +75,7 @@
 <body class="min-h-screen bg-obsidian-900 text-slate-100 flex flex-col antialiased custom-scrollbar">
 
   <!-- ========================================================================= -->
-  <!-- 1. TOP COMMAND BAR & PRODUCT MONIKER -->
+  <!-- 1. TOP COMMAND BAR -->
   <!-- ========================================================================= -->
   <header class="h-16 border-b border-specular-border bg-obsidian-950/90 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-50">
     <div class="flex items-center gap-4">
@@ -92,28 +92,23 @@
           <p class="text-[11px] text-slate-400 font-mono">Autonomous Label Operating System & Audio Engine</p>
         </div>
       </div>
-
-      <!-- Engine Status LEDs -->
-      <div class="hidden lg:flex items-center gap-4 ml-6 pl-6 border-l border-specular-border text-xs font-mono">
-        <div class="flex items-center gap-1.5">
-          <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span>
-          <span class="text-slate-300">DSP Analyzer: <span class="text-emerald-400 font-semibold">ONLINE</span></span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span>
-          <span class="text-slate-300">Visual Core: <span class="text-emerald-400 font-semibold">READY</span></span>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <span class="h-2 w-2 rounded-full bg-amber-400 pulse-amber"></span>
-          <span class="text-slate-300">DDEX Gateway: <span class="text-amber-400 font-semibold">STANDBY</span></span>
-        </div>
-      </div>
     </div>
 
-    <!-- Multi-Tenant Label Switcher & Quick Actions -->
+    <!-- Right Controls: View Mode Toggle & Tenant Selector -->
     <div class="flex items-center gap-3">
-      <div class="flex items-center gap-2 bg-obsidian-850 px-3 py-1.5 rounded-lg border border-specular-border text-xs font-mono">
-        <span class="text-slate-400">ACTIVE TENANT:</span>
+      <!-- Layout Mode Toggle (Guided Pipeline vs Overview) -->
+      <div class="flex items-center bg-obsidian-850 p-1 rounded-lg border border-specular-border text-xs font-mono">
+        <button onclick="setViewMode('guided')" id="btn-mode-guided" class="px-3 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold flex items-center gap-1.5 transition-all">
+          🧭 Guided Pipeline
+        </button>
+        <button onclick="setViewMode('overview')" id="btn-mode-overview" class="px-3 py-1 rounded text-slate-400 hover:text-white flex items-center gap-1.5 transition-all">
+          ⊞ Overview Grid
+        </button>
+      </div>
+
+      <!-- Active Label / Tenant Selector -->
+      <div class="hidden sm:flex items-center gap-2 bg-obsidian-850 px-3 py-1.5 rounded-lg border border-specular-border text-xs font-mono">
+        <span class="text-slate-400">TENANT:</span>
         <select id="tenant-selector" class="bg-transparent text-amber-400 font-semibold focus:outline-none cursor-pointer">
           <option value="apex" class="bg-obsidian-900 text-slate-100">Apex Audio Recordings [Electronic]</option>
           <option value="subzero" class="bg-obsidian-900 text-slate-100">Sub-Zero Underground [Techno]</option>
@@ -122,382 +117,487 @@
         </select>
       </div>
 
-      <button onclick="openPreFlightModal()" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        Pre-Flight Quality Gate
-      </button>
-
-      <button onclick="openConfigModal()" class="p-2 rounded-lg bg-obsidian-850 border border-specular-border hover:bg-obsidian-800 text-slate-300 hover:text-white transition-all">
+      <button onclick="openConfigModal()" title="Branding Settings" class="p-2 rounded-lg bg-obsidian-850 border border-specular-border hover:bg-obsidian-800 text-slate-300 hover:text-white transition-all">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
       </button>
     </div>
   </header>
 
   <!-- ========================================================================= -->
-  <!-- MAIN WORKSPACE -->
+  <!-- 2. GUIDED STEPPER NAVIGATION BAR (CLEAN & INTUITIVE) -->
   <!-- ========================================================================= -->
-  <main class="flex-1 p-6 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <nav id="stepper-bar" class="bg-obsidian-950 border-b border-specular-border px-6 py-3 sticky top-16 z-40">
+    <div class="max-w-5xl mx-auto flex items-center justify-between font-mono text-xs">
+      
+      <!-- Step 1 -->
+      <button onclick="goToStep(1)" id="step-btn-1" class="flex items-center gap-2 text-amber-400 font-semibold group cursor-pointer">
+        <span class="h-6 w-6 rounded-full bg-amber-500/20 border border-amber-500/60 flex items-center justify-center text-xs font-bold text-amber-300">1</span>
+        <span class="tracking-wider">AUDIO & DSP</span>
+      </button>
 
-    <!-- LEFT COLUMN: AUDIO INGESTION & VISUAL STUDIO (7 COLS) -->
-    <div class="lg:col-span-7 flex flex-col gap-6">
+      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
 
-      <!-- ===================================================================== -->
-      <!-- MODULE 1: DUAL-STAGE AUDIO INGESTION, WAVEFORM & TELEMETRY -->
-      <!-- ===================================================================== -->
-      <section class="bg-obsidian-850 rounded-xl specular-border p-5 flex flex-col gap-4">
-        <div class="flex items-center justify-between border-b border-specular-border pb-3">
-          <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-amber-400"></span>
-            <h2 class="text-sm font-mono font-bold tracking-wider text-slate-100 uppercase">Module 1 // Audio Ingestion & Telemetry</h2>
-          </div>
-          <span class="text-xs font-mono text-slate-400">DSP Core: 24-bit / 44.1kHz</span>
-        </div>
+      <!-- Step 2 -->
+      <button onclick="goToStep(2)" id="step-btn-2" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
+        <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">2</span>
+        <span class="tracking-wider">VISUAL STUDIO</span>
+      </button>
 
-        <!-- Drag & Drop Zone -->
-        <div id="drop-zone" class="border-2 border-dashed border-specular-border hover:border-amber-500/60 transition-all rounded-lg p-6 bg-obsidian-900/50 flex flex-col items-center justify-center cursor-pointer text-center relative group">
-          <input type="file" id="audio-input" accept="audio/*" class="absolute inset-0 opacity-0 cursor-pointer">
-          <svg class="w-10 h-10 text-slate-500 group-hover:text-amber-400 transition-colors mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-          <p class="text-sm font-medium text-slate-200"><span class="text-amber-400 font-semibold">Drop Master Audio File</span> or browse local drive</p>
-          <p class="text-xs text-slate-400 font-mono mt-1">Supports uncompressed WAV, AIFF, or FLAC</p>
-          <div id="active-filename" class="mt-3 px-3 py-1 bg-obsidian-800 rounded font-mono text-xs text-emerald-400 border border-emerald-500/30 hidden">
-            Selected: <span id="file-name-text">track.wav</span>
-          </div>
-        </div>
+      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
 
-        <!-- Pre-Master Headroom Diagnostic & Cloud Mastering Bridge -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-xs">
-          <!-- Headroom Health Diagnostic -->
-          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border flex flex-col justify-between">
-            <div class="flex items-center justify-between text-slate-400 mb-1">
-              <span>PRE-MASTER HEADROOM:</span>
-              <span id="headroom-status" class="text-emerald-400 font-semibold">OPTIMAL (-5.8 dBFS)</span>
-            </div>
-            <div class="w-full bg-obsidian-800 h-2 rounded-full overflow-hidden mb-1">
-              <div id="headroom-bar" class="bg-emerald-500 h-full w-[70%] transition-all"></div>
-            </div>
-            <p class="text-[11px] text-slate-400">Zero inter-sample clipping detected. Ready for delivery.</p>
-          </div>
+      <!-- Step 3 -->
+      <button onclick="goToStep(3)" id="step-btn-3" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
+        <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">3</span>
+        <span class="tracking-wider">AI PR CAMPAIGN</span>
+      </button>
 
-          <!-- Cloud Mastering Bridge Card -->
-          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border flex flex-col justify-between">
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-slate-400">CLOUD MASTERING BRIDGE:</span>
-              <span class="text-amber-400 font-semibold">LANDR / DOLBY</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <select id="mastering-preset" class="bg-obsidian-800 text-slate-200 border border-specular-border rounded px-2 py-1 text-[11px] flex-1">
-                <option value="analog">Club / Warm Tape Saturation</option>
-                <option value="open">Audiophile / Dynamic Open</option>
-                <option value="punch">Peak-Hour Punch / Maximum Density</option>
-              </select>
-              <button onclick="triggerMasteringSim()" id="btn-master" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded hover:bg-amber-500/30 transition-all text-[11px] font-semibold whitespace-nowrap">
-                ⚡ Master
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
 
-        <!-- In-Browser Interactive Waveform Player -->
-        <div class="bg-obsidian-900 rounded-lg p-3 border border-specular-border flex flex-col gap-2">
-          <div class="flex items-center justify-between text-xs font-mono text-slate-400">
-            <div class="flex items-center gap-2">
-              <button id="btn-play" onclick="togglePlay()" class="h-7 w-7 rounded-full bg-emerald-500 text-obsidian-950 flex items-center justify-center font-bold hover:bg-emerald-400 transition-colors">
-                ▶
-              </button>
-              <span id="current-time">00:00</span> / <span id="total-time">06:24</span>
-            </div>
-            <span class="text-amber-400 font-semibold" id="player-track-title">Apex_Selector_Master_24bit.wav</span>
-          </div>
-          <!-- Waveform Canvas -->
-          <canvas id="waveform-canvas" class="w-full h-14 bg-obsidian-950 rounded border border-specular-border cursor-pointer"></canvas>
-        </div>
-
-        <!-- Acoustic Telemetry Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs font-mono">
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">MEASURED TEMPO</p>
-            <p class="text-base font-bold text-amber-400 mt-0.5 flex items-center gap-1.5">
-              <span class="h-2 w-2 rounded-full bg-amber-400 animate-ping"></span>
-              <span id="tel-bpm">138.0</span> <span class="text-xs font-normal text-slate-400">BPM</span>
-            </p>
-          </div>
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">TONAL ANCHOR (KEY)</p>
-            <p class="text-base font-bold text-slate-100 mt-0.5" id="tel-key">F# Minor (Pitch 6)</p>
-          </div>
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">CORE SUB RESONANCE</p>
-            <p class="text-base font-bold text-cyan-400 mt-0.5" id="tel-sub">46.2 Hz <span class="text-xs font-normal text-slate-400">[f0]</span></p>
-          </div>
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">DYNAMIC DENSITY (CREST)</p>
-            <p class="text-base font-bold text-slate-100 mt-0.5" id="tel-crest">5.8 dB <span class="text-xs font-normal text-slate-400">[Monolith]</span></p>
-          </div>
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">SUB-60HZ MASS</p>
-            <p class="text-base font-bold text-emerald-400 mt-0.5" id="tel-mass">54.2% Kinetic</p>
-          </div>
-          <div class="bg-obsidian-900 p-2.5 rounded border border-specular-border">
-            <p class="text-slate-400 text-[10px]">SPECTRAL CEILING</p>
-            <p class="text-base font-bold text-slate-100 mt-0.5" id="tel-ceiling">11,240 Hz</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===================================================================== -->
-      <!-- MODULE 2: VISUAL STUDIO & ARTWORK ENGINE (TWO-TIER SELECTOR) -->
-      <!-- ===================================================================== -->
-      <section class="bg-obsidian-850 rounded-xl specular-border p-5 flex flex-col gap-4">
-        <div class="flex items-center justify-between border-b border-specular-border pb-3">
-          <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
-            <h2 class="text-sm font-mono font-bold tracking-wider text-slate-100 uppercase">Module 2 // Visual Studio & Artwork Engine</h2>
-          </div>
-          <!-- 3-Way Aspect Ratio Switcher -->
-          <div class="flex items-center bg-obsidian-900 rounded-lg p-0.5 border border-specular-border text-xs font-mono">
-            <button onclick="setAspect('square')" id="btn-aspect-square" class="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold">1:1 Square</button>
-            <button onclick="setAspect('vertical')" id="btn-aspect-vertical" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">9:16 Reels</button>
-            <button onclick="setAspect('horizontal')" id="btn-aspect-horizontal" class="px-2.5 py-1 rounded text-slate-400 hover:text-white">16:9 DTV</button>
-          </div>
-        </div>
-
-        <!-- Top-Level Visual Pipeline Selector -->
-        <div class="grid grid-cols-2 gap-3 text-xs font-mono">
-          <button onclick="setVisualTrack('graphic')" id="tab-graphic" class="p-3 rounded-lg border border-cyan-500/50 bg-cyan-500/10 text-left transition-all">
-            <p class="font-bold text-cyan-400">OPTION 1: IMPORT GRAPHIC</p>
-            <p class="text-[11px] text-slate-300 mt-1 font-sans">Static label cover art & typography workflow</p>
-          </button>
-          <button onclick="setVisualTrack('reactive')" id="tab-reactive" class="p-3 rounded-lg border border-specular-border bg-obsidian-900 text-left hover:border-slate-500 transition-all">
-            <p class="font-bold text-slate-300">OPTION 2: AUDIO-REACTIVE</p>
-            <p class="text-[11px] text-slate-400 mt-1 font-sans">Generative kinetic visual & TouchDesigner shaders</p>
-          </button>
-        </div>
-
-        <!-- Sub-Option Containers -->
-        <div id="sub-options-graphic" class="bg-obsidian-900 rounded-lg p-3 border border-specular-border flex flex-col gap-2.5 text-xs font-mono">
-          <p class="text-slate-400 text-[11px] uppercase">GRAPHIC WORKFLOW SUB-OPTION:</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <label class="flex items-start gap-2.5 p-2 rounded bg-obsidian-850 border border-specular-border cursor-pointer hover:border-cyan-500/40">
-              <input type="radio" name="graphic_sub" value="prebaked" checked class="mt-0.5 text-cyan-500 focus:ring-0">
-              <div>
-                <p class="font-semibold text-slate-200">1A: Completed Graphic (Pre-Baked)</p>
-                <p class="text-[11px] text-slate-400 font-sans mt-0.5">Artwork already has artist & release title. DCC validates 3000x3000px and generates crops.</p>
-              </div>
-            </label>
-            <label class="flex items-start gap-2.5 p-2 rounded bg-obsidian-850 border border-specular-border cursor-pointer hover:border-cyan-500/40">
-              <input type="radio" name="graphic_sub" value="workflow" class="mt-0.5 text-cyan-500 focus:ring-0">
-              <div>
-                <p class="font-semibold text-slate-200">1B: Create with Our Workflow</p>
-                <p class="text-[11px] text-slate-400 font-sans mt-0.5">Upload raw background. DCC Cairo/SVG typography engine overlays metadata & branding.</p>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <div id="sub-options-reactive" class="bg-obsidian-900 rounded-lg p-3 border border-specular-border flex flex-col gap-2.5 text-xs font-mono hidden">
-          <p class="text-slate-400 text-[11px] uppercase">AUDIO-REACTIVE GENERATIVE SUB-OPTION:</p>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <label class="flex items-start gap-2.5 p-2 rounded bg-obsidian-850 border border-specular-border cursor-pointer hover:border-cyan-500/40">
-              <input type="radio" name="reactive_sub" value="matchvibe" checked class="mt-0.5 text-cyan-500 focus:ring-0">
-              <div>
-                <p class="font-semibold text-slate-200">2A: Match the Vibe (Autonomous)</p>
-                <p class="text-[11px] text-slate-400 font-sans mt-0.5">DCC auto-maps BPM, key & sub-energy to Conductor's Baton Lissajous flows & color palette.</p>
-              </div>
-            </label>
-            <label class="flex items-start gap-2.5 p-2 rounded bg-obsidian-850 border border-specular-border cursor-pointer hover:border-cyan-500/40">
-              <input type="radio" name="reactive_sub" value="customtemplate" class="mt-0.5 text-cyan-500 focus:ring-0">
-              <div>
-                <p class="font-semibold text-slate-200">2B: Import Your Template</p>
-                <p class="text-[11px] text-slate-400 font-sans mt-0.5">Upload custom TouchDesigner .toe/.tox conforming to DCC Standard Node Interface.</p>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        <!-- Interactive Visual Preview Canvas / Viewport -->
-        <div class="bg-obsidian-950 rounded-lg p-4 border border-specular-border flex flex-col items-center justify-center min-h-[300px] relative overflow-hidden">
-          <div id="visual-viewport" class="w-[280px] h-[280px] bg-obsidian-900 rounded-lg border border-specular-border flex items-center justify-center relative overflow-hidden shadow-2xl transition-all duration-300">
-            <!-- Simulated Generative Animation / Canvas -->
-            <canvas id="visual-canvas" width="280" height="280" class="absolute inset-0"></canvas>
-            
-            <!-- Safe Zone Guide (Visible on 9:16) -->
-            <div id="safe-zone-overlay" class="absolute inset-0 border-y-2 border-dashed border-red-500/40 pointer-events-none hidden flex flex-col justify-between p-2 text-[9px] font-mono text-red-400">
-              <span>SOCIAL SAFE ZONE (TOP 100px)</span>
-              <span>SOCIAL SAFE ZONE (BOTTOM 200px)</span>
-            </div>
-
-            <!-- Overlay Watermark / Label Badge -->
-            <div class="absolute bottom-3 left-3 bg-obsidian-950/80 backdrop-blur px-2 py-1 rounded text-[10px] font-mono text-slate-300 border border-specular-border">
-              APEX // 005 [PREVIEW]
-            </div>
-          </div>
-
-          <div class="mt-4 flex items-center gap-3">
-            <button onclick="renderVisualMaster()" id="btn-render-visual" class="px-4 py-1.5 rounded-lg text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all flex items-center gap-1.5">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              Render Visual Master
-            </button>
-            <span class="text-xs font-mono text-slate-400" id="render-status">Status: Engine Ready</span>
-          </div>
-        </div>
-      </section>
+      <!-- Step 4 -->
+      <button onclick="goToStep(4)" id="step-btn-4" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
+        <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">4</span>
+        <span class="tracking-wider">DISTRIBUTION HUB</span>
+      </button>
     </div>
+  </nav>
 
-    <!-- RIGHT COLUMN: AI PR MARKETING & ENTERPRISE DISTRIBUTION (5 COLS) -->
-    <div class="lg:col-span-5 flex flex-col gap-6">
+  <!-- ========================================================================= -->
+  <!-- MAIN CONTENT CONTAINER (SPACIOUS & ELEGANT) -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 p-6 md:p-8 max-w-5xl mx-auto w-full flex flex-col justify-center">
 
-      <!-- ===================================================================== -->
-      <!-- MODULE 3: AI PR & 10-TOUCHPOINT SOCIAL LIFECYCLE MATRIX -->
-      <!-- ===================================================================== -->
-      <section class="bg-obsidian-850 rounded-xl specular-border p-5 flex flex-col gap-4">
-        <div class="flex items-center justify-between border-b border-specular-border pb-3">
-          <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-            <h2 class="text-sm font-mono font-bold tracking-wider text-slate-100 uppercase">Module 3 // AI PR & Social Matrix</h2>
-          </div>
-          <!-- Multi-LLM BYOM Provider Dropdown -->
-          <select id="llm-provider" class="bg-obsidian-900 text-slate-200 border border-specular-border rounded px-2 py-1 text-xs font-mono">
-            <option value="gemini">Google Gemini 2.5 (Fast)</option>
-            <option value="openai">OpenAI GPT-4o (BYOM)</option>
-            <option value="claude">Anthropic Claude 3.5 (Prose)</option>
-            <option value="local">Local LLM / Ollama</option>
-          </select>
+    <!-- ======================================================================= -->
+    <!-- STAGE 1: AUDIO INGESTION, WAVEFORM & ACOUSTIC TELEMETRY -->
+    <!-- ======================================================================= -->
+    <section id="stage-1" class="flex flex-col gap-6">
+      
+      <!-- Stage Header -->
+      <div class="flex items-center justify-between border-b border-specular-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-amber-400 font-semibold tracking-widest uppercase">Stage 01 // Ingestion</span>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Master Audio Ingestion & Acoustic Telemetry</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Drop the uncompressed engineering mixdown to compute real-time DSP harmonic analysis.</p>
         </div>
-
-        <!-- 1-Click Genre & Marketing Persona Presets -->
-        <div class="flex flex-col gap-1.5 text-xs font-mono">
-          <span class="text-slate-400 text-[11px]">SELECT MARKETING PERSONA PRESET:</span>
-          <div class="flex flex-wrap gap-1.5">
-            <button onclick="setPersona('techno')" class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400">Techno / Industrial</button>
-            <button onclick="setPersona('deephouse')" class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400">Deep House / Vinyl</button>
-            <button onclick="setPersona('melodic')" class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400">Melodic / Progressive</button>
-            <button onclick="setPersona('ambient')" class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400">Ambient / Leftfield</button>
-          </div>
+        <div class="hidden sm:flex flex-col items-end font-mono text-xs text-slate-400">
+          <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
+            <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span> DSP Engine: 24-bit PCM
+          </span>
+          <span class="text-[11px] text-slate-400">Calibrated for Club Audio</span>
         </div>
+      </div>
 
-        <!-- Editable Marketing Persona Prompt -->
-        <div class="flex flex-col gap-1 text-xs font-mono">
-          <div class="flex justify-between items-center text-slate-400 text-[11px]">
-            <span>SYSTEM PERSONA PROMPT:</span>
-            <button onclick="savePersonaPrompt()" class="text-emerald-400 hover:underline">Save As Default</button>
-          </div>
-          <textarea id="persona-prompt" rows="3" class="w-full bg-obsidian-900 text-slate-200 border border-specular-border rounded-lg p-2.5 text-xs font-mono focus:outline-none focus:border-emerald-500/50 resize-none">Act as an authoritative underground electronic music PR director. Write high-velocity, club-literate copy emphasizing sub-60Hz kinetic mass and modular analog texture.</textarea>
+      <!-- High-Impact Drag & Drop Zone -->
+      <div id="drop-zone" class="border-2 border-dashed border-specular-border hover:border-amber-500/60 transition-all rounded-xl p-8 bg-obsidian-850/60 flex flex-col items-center justify-center cursor-pointer text-center relative group min-h-[160px]">
+        <input type="file" id="audio-input" accept="audio/*" class="absolute inset-0 opacity-0 cursor-pointer">
+        <div class="h-12 w-12 rounded-full bg-obsidian-800 border border-specular-border flex items-center justify-center mb-3 group-hover:border-amber-400/50 transition-colors">
+          <svg class="w-6 h-6 text-slate-400 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
         </div>
+        <p class="text-base font-semibold text-slate-100"><span class="text-amber-400">Click to upload</span> or drag master audio file here</p>
+        <p class="text-xs text-slate-400 font-mono mt-1">Accepts uncompressed WAV, AIFF, or FLAC (24-bit / 44.1kHz or 96kHz)</p>
+        <div id="active-filename" class="mt-3 px-3 py-1 bg-obsidian-800 rounded font-mono text-xs text-emerald-400 border border-emerald-500/30 hidden">
+          Loaded: <span id="file-name-text">track.wav</span>
+        </div>
+      </div>
 
-        <!-- 10-Touchpoint Campaign Trigger & Overview -->
-        <div class="bg-obsidian-900 rounded-lg p-3 border border-specular-border flex flex-col gap-2">
-          <div class="flex items-center justify-between text-xs font-mono">
-            <span class="text-slate-300 font-semibold">10-TOUCHPOINT LIFECYCLE SCHEDULE</span>
-            <span class="text-[11px] text-emerald-400">Release: 2026-10-15</span>
-          </div>
-          <div class="text-[11px] text-slate-400 font-sans flex items-center justify-between border-t border-specular-border/50 pt-2">
-            <span>• 3x Announce</span>
-            <span>• 2x Countdown</span>
-            <span>• 1x Out Now</span>
-            <span>• 4x Re-Hype</span>
-          </div>
-
-          <!-- Direct Download & Deep Link Actions -->
-          <div class="mt-2 pt-2 border-t border-specular-border/50 flex flex-col gap-2">
-            <div class="flex items-center gap-2">
-              <button onclick="downloadMetricoolCSV()" class="flex-1 py-1.5 px-3 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-semibold hover:bg-emerald-500/30 transition-all flex items-center justify-center gap-1.5">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                Export Metricool CSV
-              </button>
-              <a href="https://app.metricool.com/planning" target="_blank" class="py-1.5 px-3 rounded bg-obsidian-800 text-slate-300 border border-specular-border text-xs font-mono hover:text-white flex items-center gap-1">
-                Metricool ↗
-              </a>
+      <!-- In-Browser Interactive Waveform Player -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-3">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <div class="flex items-center gap-3">
+            <button id="btn-play" onclick="togglePlay()" class="h-9 w-9 rounded-full bg-emerald-500 text-obsidian-950 flex items-center justify-center font-bold hover:bg-emerald-400 transition-colors shadow-lg">
+              ▶
+            </button>
+            <div class="flex items-center gap-1.5 text-slate-300">
+              <span id="current-time">00:00</span>
+              <span class="text-slate-400">/</span>
+              <span id="total-time">06:24</span>
             </div>
-            <button onclick="downloadICS()" class="w-full py-1 rounded bg-obsidian-850 text-slate-400 border border-specular-border text-[11px] font-mono hover:text-slate-200">
-              📅 Export 10-Event iCalendar (.ics)
+          </div>
+          <span class="text-amber-400 font-semibold" id="player-track-title">Apex_Selector_Master_24bit.wav</span>
+        </div>
+        
+        <!-- Waveform Canvas -->
+        <canvas id="waveform-canvas" class="w-full h-16 bg-obsidian-950 rounded-lg border border-specular-border cursor-pointer"></canvas>
+      </div>
+
+      <!-- Diagnostic & Cloud Mastering Bridge (2 Columns with Room to Breathe) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
+        
+        <!-- Headroom Diagnostic -->
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border flex flex-col justify-between gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">PRE-MASTER HEADROOM:</span>
+            <span id="headroom-status" class="text-emerald-400 font-bold">OPTIMAL (-5.8 dBFS)</span>
+          </div>
+          <div class="w-full bg-obsidian-900 h-2.5 rounded-full overflow-hidden">
+            <div id="headroom-bar" class="bg-emerald-500 h-full w-[70%] transition-all"></div>
+          </div>
+          <p class="text-[11px] text-slate-400 font-sans">Zero inter-sample clipping detected. Master output calibrated for high-excursion club systems.</p>
+        </div>
+
+        <!-- Cloud Mastering Bridge -->
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border flex flex-col justify-between gap-3">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">CLOUD MASTERING BRIDGE:</span>
+            <span class="text-amber-400 font-bold">LANDR / DOLBY API</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="mastering-preset" class="bg-obsidian-900 text-slate-200 border border-specular-border rounded-lg px-2.5 py-1.5 text-xs flex-1 focus:outline-none">
+              <option value="analog">Club / Warm Tape Saturation</option>
+              <option value="open">Audiophile / Dynamic Open</option>
+              <option value="punch">Peak-Hour Punch / High Density</option>
+            </select>
+            <button onclick="triggerMasteringSim()" id="btn-master" class="px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500/30 transition-all font-semibold whitespace-nowrap">
+              ⚡ Master
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Generated Dossier Preview Box -->
-        <div class="bg-obsidian-950 rounded-lg p-3 border border-specular-border flex flex-col gap-2 text-xs font-mono">
+      <!-- Live Acoustic Telemetry Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs font-mono">
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">TEMPO (BPM)</p>
+          <p class="text-xl font-bold text-amber-400 mt-1 flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-amber-400 animate-ping"></span>
+            <span id="tel-bpm">138.0</span> <span class="text-xs font-normal text-slate-400">BPM</span>
+          </p>
+        </div>
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">TONAL ANCHOR (KEY)</p>
+          <p class="text-xl font-bold text-slate-100 mt-1" id="tel-key">F# Minor</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Pitch Class 6 (Harmonic Center)</p>
+        </div>
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">CORE SUB RESONANCE</p>
+          <p class="text-xl font-bold text-cyan-400 mt-1" id="tel-sub">46.2 Hz <span class="text-xs font-normal text-slate-400">[f0]</span></p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Sub-Fundamental Monolith</p>
+        </div>
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">CREST FACTOR (DENSITY)</p>
+          <p class="text-xl font-bold text-slate-100 mt-1" id="tel-crest">5.8 dB</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Heavy Club Compression</p>
+        </div>
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">SUB-60HZ MASS</p>
+          <p class="text-xl font-bold text-emerald-400 mt-1" id="tel-mass">54.2%</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">Kinetic Air Displacement</p>
+        </div>
+        <div class="bg-obsidian-850 p-4 rounded-xl specular-border">
+          <p class="text-slate-400 text-[11px]">SPECTRAL CEILING</p>
+          <p class="text-xl font-bold text-slate-100 mt-1" id="tel-ceiling">11,240 Hz</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">95% Energy Cutoff Slope</p>
+        </div>
+      </div>
+
+      <!-- Step 1 Footer Action Bar -->
+      <div class="border-t border-specular-border pt-5 flex items-center justify-between">
+        <span class="text-xs font-mono text-slate-400">Audio Telemetry Verified ✓</span>
+        <button onclick="goToStep(2)" class="px-6 py-2.5 bg-amber-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-amber-400 transition-colors flex items-center gap-2 shadow-lg">
+          Continue to Step 2: Visual Studio →
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- STAGE 2: VISUAL STUDIO & ARTWORK ENGINE -->
+    <!-- ======================================================================= -->
+    <section id="stage-2" class="flex flex-col gap-6 hidden">
+      
+      <!-- Stage Header -->
+      <div class="flex items-center justify-between border-b border-specular-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-cyan-400 font-semibold tracking-widest uppercase">Stage 02 // Visual Studio</span>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Artwork Pipeline & Generative Video Engine</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Select your label's visual track: static branded cover art or audio-reactive TouchDesigner shaders.</p>
+        </div>
+        <!-- 3-Way Aspect Ratio Switcher -->
+        <div class="flex items-center bg-obsidian-850 rounded-lg p-1 border border-specular-border text-xs font-mono">
+          <button onclick="setAspect('square')" id="btn-aspect-square" class="px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold">1:1 Square</button>
+          <button onclick="setAspect('vertical')" id="btn-aspect-vertical" class="px-3 py-1 rounded text-slate-400 hover:text-white">9:16 Reels</button>
+          <button onclick="setAspect('horizontal')" id="btn-aspect-horizontal" class="px-3 py-1 rounded text-slate-400 hover:text-white">16:9 DTV</button>
+        </div>
+      </div>
+
+      <!-- Top-Level Visual Pipeline Selector -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+        <button onclick="setVisualTrack('graphic')" id="tab-graphic" class="p-4 rounded-xl border border-cyan-500/50 bg-cyan-500/10 text-left transition-all">
+          <p class="text-sm font-bold text-cyan-400">OPTION 1: IMPORT GRAPHIC</p>
+          <p class="text-xs text-slate-300 mt-1 font-sans">For labels with dedicated album artwork or typography branding templates.</p>
+        </button>
+        <button onclick="setVisualTrack('reactive')" id="tab-reactive" class="p-4 rounded-xl border border-specular-border bg-obsidian-850 text-left hover:border-slate-500 transition-all">
+          <p class="text-sm font-bold text-slate-300">OPTION 2: AUDIO-REACTIVE</p>
+          <p class="text-xs text-slate-400 mt-1 font-sans">Kinetic Conductor's Baton 3D trajectory & generative TouchDesigner loops.</p>
+        </button>
+      </div>
+
+      <!-- Sub-Option Containers -->
+      <div id="sub-options-graphic" class="bg-obsidian-850 rounded-xl p-4 specular-border flex flex-col gap-3 text-xs font-mono">
+        <span class="text-slate-400 text-[11px] uppercase">GRAPHIC WORKFLOW SUB-OPTION:</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <label class="flex items-start gap-3 p-3 rounded-lg bg-obsidian-900 border border-specular-border cursor-pointer hover:border-cyan-500/40">
+            <input type="radio" name="graphic_sub" value="prebaked" checked class="mt-0.5 text-cyan-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">1A: Completed Graphic (Pre-Baked)</p>
+              <p class="text-[11px] text-slate-400 font-sans mt-0.5">Artwork already has artist & release text. DCC validates 3000x3000px and generates crops.</p>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-3 rounded-lg bg-obsidian-900 border border-specular-border cursor-pointer hover:border-cyan-500/40">
+            <input type="radio" name="graphic_sub" value="workflow" class="mt-0.5 text-cyan-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">1B: Create with Our Workflow</p>
+              <p class="text-[11px] text-slate-400 font-sans mt-0.5">Upload raw background. DCC Cairo/SVG typography engine overlays metadata & branding.</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div id="sub-options-reactive" class="bg-obsidian-850 rounded-xl p-4 specular-border flex flex-col gap-3 text-xs font-mono hidden">
+        <span class="text-slate-400 text-[11px] uppercase">AUDIO-REACTIVE GENERATIVE SUB-OPTION:</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <label class="flex items-start gap-3 p-3 rounded-lg bg-obsidian-900 border border-specular-border cursor-pointer hover:border-cyan-500/40">
+            <input type="radio" name="reactive_sub" value="matchvibe" checked class="mt-0.5 text-cyan-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">2A: Match the Vibe (Autonomous)</p>
+              <p class="text-[11px] text-slate-400 font-sans mt-0.5">DCC auto-maps BPM, key & sub-energy to Conductor's Baton Lissajous flows & color palette.</p>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-3 rounded-lg bg-obsidian-900 border border-specular-border cursor-pointer hover:border-cyan-500/40">
+            <input type="radio" name="reactive_sub" value="customtemplate" class="mt-0.5 text-cyan-500 focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">2B: Import Your Template</p>
+              <p class="text-[11px] text-slate-400 font-sans mt-0.5">Upload custom TouchDesigner .toe/.tox conforming to DCC Standard Node Interface.</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Centered Interactive Viewport -->
+      <div class="bg-obsidian-850 rounded-xl p-6 specular-border flex flex-col items-center justify-center min-h-[360px] relative overflow-hidden">
+        <div id="visual-viewport" class="w-[300px] h-[300px] bg-obsidian-950 rounded-lg border border-specular-border flex items-center justify-center relative overflow-hidden shadow-2xl transition-all duration-300">
+          <canvas id="visual-canvas" width="300" height="300" class="absolute inset-0"></canvas>
+          
+          <div id="safe-zone-overlay" class="absolute inset-0 border-y-2 border-dashed border-red-500/40 pointer-events-none hidden flex flex-col justify-between p-2 text-[9px] font-mono text-red-400">
+            <span>SOCIAL SAFE ZONE (TOP 100px)</span>
+            <span>SOCIAL SAFE ZONE (BOTTOM 200px)</span>
+          </div>
+
+          <div class="absolute bottom-3 left-3 bg-obsidian-950/80 backdrop-blur px-2.5 py-1 rounded text-[10px] font-mono text-slate-300 border border-specular-border">
+            APEX // 005 [MASTER VIDEO]
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center gap-4">
+          <button onclick="renderVisualMaster()" id="btn-render-visual" class="px-5 py-2 rounded-lg text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Render Generative Master
+          </button>
+          <span class="text-xs font-mono text-slate-400" id="render-status">Status: Engine Ready</span>
+        </div>
+      </div>
+
+      <!-- Step 2 Footer Action Bar -->
+      <div class="border-t border-specular-border pt-5 flex items-center justify-between">
+        <button onclick="goToStep(1)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
+          ← Back to Audio
+        </button>
+        <button onclick="goToStep(3)" class="px-6 py-2.5 bg-cyan-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-cyan-400 transition-colors shadow-lg">
+          Continue to Step 3: AI PR Campaign →
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- STAGE 3: AI PR & 10-TOUCHPOINT SOCIAL LIFECYCLE MATRIX -->
+    <!-- ======================================================================= -->
+    <section id="stage-3" class="flex flex-col gap-6 hidden">
+      
+      <!-- Stage Header -->
+      <div class="flex items-center justify-between border-b border-specular-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-emerald-400 font-semibold tracking-widest uppercase">Stage 03 // Promotion & Press</span>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">AI PR Marketing & 10-Touchpoint Social Matrix</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Configure your marketing persona and generate an anti-fatigue 10-post social lifecycle campaign.</p>
+        </div>
+        <!-- Multi-LLM BYOM Provider Dropdown -->
+        <select id="llm-provider" class="bg-obsidian-850 text-slate-200 border border-specular-border rounded-lg px-3 py-1.5 text-xs font-mono">
+          <option value="gemini">Google Gemini 2.5 (Fast)</option>
+          <option value="openai">OpenAI GPT-4o (BYOM)</option>
+          <option value="claude">Anthropic Claude 3.5 (Prose)</option>
+          <option value="local">Local LLM / Ollama</option>
+        </select>
+      </div>
+
+      <!-- Persona Configuration -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-3">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-400 font-semibold uppercase">1-CLICK GENRE & MARKETING PERSONA PRESETS:</span>
+          <span class="text-emerald-400">Telemetry Injected</span>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <button onclick="setPersona('techno')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors">Techno / Industrial</button>
+          <button onclick="setPersona('deephouse')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors">Deep House / Vinyl</button>
+          <button onclick="setPersona('melodic')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors">Melodic / Progressive</button>
+          <button onclick="setPersona('ambient')" class="px-3 py-1.5 rounded-lg bg-obsidian-900 border border-specular-border text-slate-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-colors">Ambient / Leftfield</button>
+        </div>
+        <textarea id="persona-prompt" rows="3" class="w-full bg-obsidian-900 text-slate-200 border border-specular-border rounded-lg p-3 text-xs font-mono focus:outline-none focus:border-emerald-500/50 resize-none">Act as an authoritative underground electronic music PR director. Write high-velocity, club-literate copy emphasizing sub-60Hz kinetic mass and modular analog texture.</textarea>
+      </div>
+
+      <!-- 10-Touchpoint Campaign Schedule Table -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-specular-border pb-3">
+          <div>
+            <span class="text-sm font-bold text-slate-100">10-Touchpoint Lifecycle Release Campaign</span>
+            <p class="text-xs text-slate-400 font-sans mt-0.5">Automated schedule mapped against Release Date: 2026-10-15</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="downloadMetricoolCSV()" class="py-1.5 px-3 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-semibold hover:bg-emerald-500/30 transition-all flex items-center gap-1.5">
+              📥 Export Metricool CSV
+            </button>
+            <a href="https://app.metricool.com/planning" target="_blank" class="py-1.5 px-3 rounded-lg bg-obsidian-900 text-slate-300 border border-specular-border text-xs font-mono hover:text-white flex items-center gap-1">
+              Metricool ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Touchpoints Summary Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono">
+          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border">
+            <p class="text-slate-400 text-[10px]">PHASE 1: ANNOUNCE</p>
+            <p class="text-base font-bold text-amber-400 mt-1">3 Posts (T-21, 14, 10d)</p>
+            <p class="text-[10px] text-slate-400">Pre-Save & Concept Reveal</p>
+          </div>
+          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border">
+            <p class="text-slate-400 text-[10px]">PHASE 2: COUNTDOWN</p>
+            <p class="text-base font-bold text-cyan-400 mt-1">2 Posts (T-5, 2d)</p>
+            <p class="text-[10px] text-slate-400">9:16 Vertical Video Clips</p>
+          </div>
+          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border">
+            <p class="text-slate-400 text-[10px]">PHASE 3: OUT NOW!</p>
+            <p class="text-base font-bold text-emerald-400 mt-1">1 Post (Drop Day)</p>
+            <p class="text-[10px] text-slate-400">Full Streaming Ignition</p>
+          </div>
+          <div class="bg-obsidian-900 p-3 rounded-lg border border-specular-border">
+            <p class="text-slate-400 text-[10px]">PHASE 4: RE-HYPE</p>
+            <p class="text-base font-bold text-indigo-400 mt-1">4 Posts (T+3, 7, 14, 21d)</p>
+            <p class="text-[10px] text-slate-400">DJ Support, Stems & Charts</p>
+          </div>
+        </div>
+
+        <!-- Generated Dossier Output Box -->
+        <div class="bg-obsidian-950 rounded-lg p-4 border border-specular-border flex flex-col gap-2 text-xs font-mono">
           <div class="flex items-center justify-between text-slate-400">
-            <span>TACTICAL SELECTOR DOSSIER:</span>
+            <span>TACTICAL SELECTOR DOSSIER (LIVE GENERATION):</span>
             <button onclick="generateCopy()" id="btn-gen-copy" class="text-amber-400 font-semibold hover:underline">⚡ Re-Generate</button>
           </div>
-          <div id="copy-preview" class="text-slate-300 text-[11px] font-mono leading-relaxed h-28 overflow-y-auto custom-scrollbar bg-obsidian-900 p-2 rounded">
+          <div id="copy-preview" class="text-slate-300 text-xs font-mono leading-relaxed h-28 overflow-y-auto custom-scrollbar bg-obsidian-900 p-3 rounded">
 [TACTICAL DISPATCH]
 DEPLOYMENT_VECTOR: PEAK_HOUR COLLAPSE // 138 BPM
 TARGET_AUDIENCE: BASEMENT WAREHOUSE // PURE TECHNO HEADZ
 TACTICAL_FUNCTION: SYSTEM ACCELERATOR // High kinetic air displacement.
 OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded club arrays.
+
+[SONIC TELEMETRY]
+TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- ===================================================================== -->
-      <!-- MODULE 4: ENTERPRISE DISTRIBUTION & CLOUD VAULT HUB -->
-      <!-- ===================================================================== -->
-      <section class="bg-obsidian-850 rounded-xl specular-border p-5 flex flex-col gap-4">
-        <div class="flex items-center justify-between border-b border-specular-border pb-3">
-          <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
-            <h2 class="text-sm font-mono font-bold tracking-wider text-slate-100 uppercase">Module 4 // Distribution & Cloud Hub</h2>
-          </div>
-          <span class="text-xs font-mono text-indigo-400 font-semibold">DDEX v4.3</span>
+      <!-- Step 3 Footer Action Bar -->
+      <div class="border-t border-specular-border pt-5 flex items-center justify-between">
+        <button onclick="goToStep(2)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
+          ← Back to Visuals
+        </button>
+        <button onclick="goToStep(4)" class="px-6 py-2.5 bg-emerald-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-emerald-400 transition-colors shadow-lg">
+          Continue to Step 4: Distribution Hub →
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- STAGE 4: ENTERPRISE DISTRIBUTION & CLOUD VAULT -->
+    <!-- ======================================================================= -->
+    <section id="stage-4" class="flex flex-col gap-6 hidden">
+      
+      <!-- Stage Header -->
+      <div class="flex items-center justify-between border-b border-specular-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-indigo-400 font-semibold tracking-widest uppercase">Stage 04 // Release Dispatch</span>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Enterprise Distribution Gateway & Cloud Vault</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Select your connected distributor, verify pre-flight quality standards, and dispatch the ingestion payload.</p>
+        </div>
+        <button onclick="openPreFlightModal()" class="px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Pre-Flight Check: [PASS]
+        </button>
+      </div>
+
+      <!-- Distributor Grid with Dynamic Presets -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-mono text-slate-400 font-semibold uppercase">SELECT CONNECTED PARTNER GATEWAY:</span>
+          <button onclick="openCustomGatewayModal()" class="text-xs font-mono text-indigo-400 hover:text-indigo-300 underline">+ Add Custom Gateway</button>
         </div>
 
-        <!-- Universal Distributor Gateway Selector -->
-        <div class="flex flex-col gap-1.5 text-xs font-mono">
-          <div class="flex items-center justify-between">
-            <span class="text-slate-400 text-[11px]">CONNECTED DISTRIBUTOR GATEWAY:</span>
-            <button onclick="openCustomGatewayModal()" class="text-indigo-400 hover:text-indigo-300 text-[10px] underline">+ Custom Gateway</button>
-          </div>
-          <div id="distributor-grid" class="grid grid-cols-3 gap-2">
-            <button onclick="selectDistributor('proton')" id="dist-btn-proton" class="p-2 rounded bg-obsidian-900 border border-specular-border text-slate-300 text-left hover:border-indigo-400 transition-all">
-              <span class="font-semibold block">Proton API</span>
-              <span class="text-[10px] text-slate-400">Direct SoundSystem</span>
-            </button>
-            <button onclick="selectDistributor('labelworx')" id="dist-btn-labelworx" class="p-2 rounded bg-obsidian-900 border border-specular-border text-slate-300 text-left hover:border-indigo-400 transition-all">
-              <span class="font-semibold block">Label Worx</span>
-              <span class="text-[10px] text-slate-400">DDEX / Hotfolder</span>
-            </button>
-            <button onclick="selectDistributor('ampsuite')" id="dist-btn-ampsuite" class="p-2 rounded bg-obsidian-900 border border-indigo-500/50 text-indigo-300 text-left hover:bg-obsidian-800 transition-all font-semibold">
-              <span class="font-semibold block">● Ampsuite API</span>
-              <span class="text-[10px] text-indigo-400">Connected v2.4</span>
-            </button>
-            <button onclick="selectDistributor('fuga')" id="dist-btn-fuga" class="p-2 rounded bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all">
-              <span class="font-semibold block">FUGA DDEX</span>
-              <span class="text-[10px] text-slate-400">Enterprise v4.3</span>
-            </button>
-            <button onclick="selectDistributor('universal')" id="dist-btn-universal" class="p-2 rounded bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all">
-              <span class="font-semibold block">Universal DDEX</span>
-              <span class="text-[10px] text-slate-400">Standard XML/SFTP</span>
-            </button>
-            <button onclick="openCustomGatewayModal()" id="dist-btn-custom" class="p-2 rounded bg-obsidian-900 border border-dashed border-specular-border text-slate-400 text-left hover:text-amber-400 hover:border-amber-400 transition-all">
-              <span class="font-semibold block" id="custom-dist-name">+ Custom</span>
-              <span class="text-[10px] text-slate-400" id="custom-dist-sub">Add Partner...</span>
-            </button>
-          </div>
+        <div id="distributor-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3 font-mono text-xs">
+          <button onclick="selectDistributor('proton')" id="dist-btn-proton" class="p-3 rounded-xl bg-obsidian-900 border border-specular-border text-slate-300 text-left hover:border-indigo-400 transition-all">
+            <span class="font-bold text-sm block">Proton API</span>
+            <span class="text-[11px] text-slate-400">Direct SoundSystem Gateway</span>
+          </button>
+          <button onclick="selectDistributor('labelworx')" id="dist-btn-labelworx" class="p-3 rounded-xl bg-obsidian-900 border border-specular-border text-slate-300 text-left hover:border-indigo-400 transition-all">
+            <span class="font-bold text-sm block">Label Worx</span>
+            <span class="text-[11px] text-slate-400">Enterprise DDEX Hotfolder</span>
+          </button>
+          <button onclick="selectDistributor('ampsuite')" id="dist-btn-ampsuite" class="p-3 rounded-xl bg-obsidian-900 border border-indigo-500/50 text-indigo-300 text-left hover:bg-obsidian-800 transition-all font-semibold">
+            <span class="font-bold text-sm block">● Ampsuite API</span>
+            <span class="text-[11px] text-indigo-400">Connected v2.4</span>
+          </button>
+          <button onclick="selectDistributor('fuga')" id="dist-btn-fuga" class="p-3 rounded-xl bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all">
+            <span class="font-bold text-sm block">FUGA DDEX</span>
+            <span class="text-[11px] text-slate-400">Enterprise Delivery v4.3</span>
+          </button>
+          <button onclick="selectDistributor('universal')" id="dist-btn-universal" class="p-3 rounded-xl bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all">
+            <span class="font-bold text-sm block">Universal DDEX</span>
+            <span class="text-[11px] text-slate-400">Standard XML/SFTP Delivery</span>
+          </button>
+          <button onclick="openCustomGatewayModal()" id="dist-btn-custom" class="p-3 rounded-xl bg-obsidian-900 border border-dashed border-specular-border text-slate-400 text-left hover:text-amber-400 hover:border-amber-400 transition-all">
+            <span class="font-bold text-sm block" id="custom-dist-name">+ Custom</span>
+            <span class="text-[11px] text-slate-400" id="custom-dist-sub">Add Partner...</span>
+          </button>
         </div>
+      </div>
 
-        <!-- Cloud Storage Provider Selector -->
-        <div class="bg-obsidian-900 rounded-lg p-3 border border-specular-border flex flex-col gap-2 text-xs font-mono">
-          <div class="flex items-center justify-between">
-            <span class="text-slate-400 text-[11px]">ACTIVE CLOUD VAULT PROVIDER:</span>
-            <span class="text-emerald-400 text-[10px]">CONNECTED</span>
-          </div>
-          <div class="grid grid-cols-4 gap-1.5 text-[11px]">
-            <button class="py-1 px-2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-center font-semibold">G-Drive</button>
-            <button class="py-1 px-2 rounded bg-obsidian-850 text-slate-400 border border-specular-border text-center hover:text-white">Dropbox</button>
-            <button class="py-1 px-2 rounded bg-obsidian-850 text-slate-400 border border-specular-border text-center hover:text-white">OneDrive</button>
-            <button class="py-1 px-2 rounded bg-obsidian-850 text-slate-400 border border-specular-border text-center hover:text-white">AWS S3</button>
-          </div>
-          <p class="text-[10px] text-slate-400 font-sans mt-1">Generates public read-only promo links for DJs and embeds 3000px art in Notion.</p>
+      <!-- Cloud Storage Multi-Vault Provider -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-3 font-mono text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-400 font-semibold uppercase">ACTIVE CLOUD STORAGE VAULT:</span>
+          <span class="text-emerald-400 font-semibold">AUTHENTICATED // READY</span>
         </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <button class="py-2.5 px-3 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-center font-semibold">Google Drive</button>
+          <button class="py-2.5 px-3 rounded-lg bg-obsidian-900 text-slate-400 border border-specular-border text-center hover:text-white">Dropbox</button>
+          <button class="py-2.5 px-3 rounded-lg bg-obsidian-900 text-slate-400 border border-specular-border text-center hover:text-white">OneDrive</button>
+          <button class="py-2.5 px-3 rounded-lg bg-obsidian-900 text-slate-400 border border-specular-border text-center hover:text-white">AWS S3 / R2</button>
+        </div>
+        <p class="text-[11px] text-slate-400 font-sans mt-1">Generates public read-only promo links for DJs and embeds 3000px cover art directly into Notion & Web EPK.</p>
+      </div>
 
-        <!-- Dispatch & Ingestion Button -->
-        <button onclick="openActiveDistributorModal()" id="btn-dispatch-main" class="w-full py-2.5 rounded-lg bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-cyan-500/20 text-slate-100 border border-specular-border hover:border-amber-400/50 text-xs font-mono font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-2">
+      <!-- Primary Ingestion Batch Dispatch Button -->
+      <div class="bg-obsidian-850 rounded-xl p-6 specular-border flex flex-col items-center justify-center gap-3 text-center">
+        <button onclick="openActiveDistributorModal()" id="btn-dispatch-main" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-indigo-500/20 text-slate-100 border border-specular-border hover:border-indigo-400/50 text-sm font-mono font-bold tracking-wider uppercase transition-all shadow-xl flex items-center justify-center gap-2">
           <span id="btn-dispatch-text">🚀 Dispatch Ingestion Batch to Ampsuite</span>
         </button>
-      </section>
+        <p class="text-xs text-slate-400 font-mono">Payload packaged according to DDEX Electronic Release Notification (ERN 4.3)</p>
+      </div>
 
-    </div>
+      <!-- Step 4 Footer Action Bar -->
+      <div class="border-t border-specular-border pt-5 flex items-center justify-between">
+        <button onclick="goToStep(3)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
+          ← Back to Campaign
+        </button>
+        <span class="text-xs font-mono text-emerald-400 font-semibold">All Systems Certified & Ready ✓</span>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================================================= -->
@@ -666,7 +766,55 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
   <!-- JAVASCRIPT: ENGINE & UI LOGIC -->
   <!-- ========================================================================= -->
   <script>
-    // 1. BRANDING & SETTINGS LOGIC
+    // 1. STEPPER NAVIGATION LOGIC
+    let currentStep = 1;
+    let viewMode = 'guided';
+
+    function goToStep(step) {
+      currentStep = step;
+      if (viewMode === 'guided') {
+        [1, 2, 3, 4].forEach(s => {
+          const el = document.getElementById('stage-' + s);
+          const btn = document.getElementById('step-btn-' + s);
+          if (s === step) {
+            el.classList.remove('hidden');
+            btn.className = "flex items-center gap-2 text-amber-400 font-semibold group cursor-pointer";
+            btn.querySelector('span:first-child').className = "h-6 w-6 rounded-full bg-amber-500/20 border border-amber-500/60 flex items-center justify-center text-xs font-bold text-amber-300";
+          } else {
+            el.classList.add('hidden');
+            btn.className = "flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors";
+            btn.querySelector('span:first-child').className = "h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400";
+          }
+        });
+      }
+      if (step === 1) setTimeout(drawWaveform, 50);
+      if (step === 2) setTimeout(drawVisualArtwork, 50);
+    }
+
+    function setViewMode(mode) {
+      viewMode = mode;
+      const btnG = document.getElementById('btn-mode-guided');
+      const btnO = document.getElementById('btn-mode-overview');
+      const stepper = document.getElementById('stepper-bar');
+
+      if (mode === 'guided') {
+        btnG.className = "px-3 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold flex items-center gap-1.5 transition-all";
+        btnO.className = "px-3 py-1 rounded text-slate-400 hover:text-white flex items-center gap-1.5 transition-all";
+        stepper.classList.remove('hidden');
+        goToStep(currentStep);
+      } else {
+        btnO.className = "px-3 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold flex items-center gap-1.5 transition-all";
+        btnG.className = "px-3 py-1 rounded text-slate-400 hover:text-white flex items-center gap-1.5 transition-all";
+        stepper.classList.add('hidden');
+        [1, 2, 3, 4].forEach(s => {
+          document.getElementById('stage-' + s).classList.remove('hidden');
+        });
+        setTimeout(drawWaveform, 50);
+        setTimeout(drawVisualArtwork, 50);
+      }
+    }
+
+    // 2. BRANDING & SETTINGS LOGIC
     function openConfigModal() { document.getElementById('modal-config').classList.remove('hidden'); }
     function closeConfigModal() { document.getElementById('modal-config').classList.add('hidden'); }
     function saveConfig() {
@@ -677,7 +825,7 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       closeConfigModal();
     }
 
-    // 2. DISTRIBUTOR GATEWAYS (DYNAMIC SELECTOR)
+    // 3. DISTRIBUTOR GATEWAYS (DYNAMIC SELECTOR)
     const distributorProfiles = {
       proton: {
         name: "Proton API",
@@ -732,14 +880,13 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       activeDistributor = key;
       const prof = distributorProfiles[key] || distributorProfiles.ampsuite;
 
-      // Update button styles in grid
       ['proton', 'labelworx', 'ampsuite', 'fuga', 'universal', 'custom'].forEach(id => {
         const btn = document.getElementById('dist-btn-' + id);
         if (btn) {
           if (id === key) {
-            btn.className = "p-2 rounded bg-obsidian-900 border border-indigo-500/50 text-indigo-300 text-left hover:bg-obsidian-800 transition-all font-semibold";
+            btn.className = "p-3 rounded-xl bg-obsidian-900 border border-indigo-500/50 text-indigo-300 text-left hover:bg-obsidian-800 transition-all font-semibold";
           } else {
-            btn.className = "p-2 rounded bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all";
+            btn.className = "p-3 rounded-xl bg-obsidian-900 border border-specular-border text-slate-400 text-left hover:text-white transition-all";
           }
         }
       });
@@ -775,7 +922,6 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
     }
 
     function closeDistributorModal() { document.getElementById('modal-distributor').classList.add('hidden'); }
-
     function openCustomGatewayModal() { document.getElementById('modal-custom-gateway').classList.remove('hidden'); }
     function closeCustomGatewayModal() { document.getElementById('modal-custom-gateway').classList.add('hidden'); }
 
@@ -816,7 +962,7 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       }, 1200);
     }
 
-    // 3. AUDIO INGESTION & WAVEFORM CANVAS
+    // 4. AUDIO INGESTION & WAVEFORM CANVAS
     const waveCanvas = document.getElementById('waveform-canvas');
     const waveCtx = waveCanvas.getContext('2d');
     let isPlaying = false;
@@ -825,9 +971,10 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
     function drawWaveform() {
       const w = waveCanvas.width = waveCanvas.offsetWidth;
       const h = waveCanvas.height = waveCanvas.offsetHeight;
+      if (w === 0 || h === 0) return;
       waveCtx.clearRect(0, 0, w, h);
 
-      const bars = 80;
+      const bars = 90;
       const barWidth = w / bars;
       for (let i = 0; i < bars; i++) {
         const barHeight = Math.sin(i * 0.15) * 0.35 + Math.cos(i * 0.3) * 0.25 + 0.35;
@@ -836,9 +983,9 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
         const y = (h - actualH) / 2;
 
         if (x / w <= waveProgress) {
-          waveCtx.fillStyle = '#10b981'; // Played emerald
+          waveCtx.fillStyle = '#10b981';
         } else {
-          waveCtx.fillStyle = '#1f2533'; // Unplayed dark slate
+          waveCtx.fillStyle = '#1f2533';
         }
         waveCtx.fillRect(x + 1, y, barWidth - 2, actualH);
       }
@@ -857,7 +1004,6 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       document.getElementById('btn-play').innerText = isPlaying ? '❚❚' : '▶';
     }
 
-    // Handle Drag & Drop
     const dropZone = document.getElementById('drop-zone');
     const audioInput = document.getElementById('audio-input');
 
@@ -867,7 +1013,6 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
         document.getElementById('file-name-text').innerText = file.name;
         document.getElementById('active-filename').classList.remove('hidden');
         document.getElementById('player-track-title').innerText = file.name;
-        triggerTelemetryAnalysis(file.name);
       }
     });
 
@@ -881,16 +1026,7 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       }, 1500);
     }
 
-    function triggerTelemetryAnalysis(filename) {
-      // Simulate real live telemetry calculation
-      document.getElementById('tel-bpm').innerText = "138.0";
-      document.getElementById('tel-key').innerText = "F# Minor (Pitch 6)";
-      document.getElementById('tel-sub').innerHTML = "46.2 Hz <span class='text-xs font-normal text-slate-400'>[f0]</span>";
-      document.getElementById('tel-crest').innerHTML = "5.8 dB <span class='text-xs font-normal text-slate-400'>[Monolith]</span>";
-      document.getElementById('tel-mass').innerText = "54.2% Kinetic";
-    }
-
-    // 4. MODULE 2: VISUAL STUDIO & ASPECT RATIOS
+    // 5. VISUAL STUDIO & ASPECT RATIOS
     function setAspect(mode) {
       const viewport = document.getElementById('visual-viewport');
       const safeZone = document.getElementById('safe-zone-overlay');
@@ -899,24 +1035,24 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       const btnHoriz = document.getElementById('btn-aspect-horizontal');
 
       [btnSq, btnVert, btnHoriz].forEach(b => {
-        b.className = "px-2.5 py-1 rounded text-slate-400 hover:text-white";
+        b.className = "px-3 py-1 rounded text-slate-400 hover:text-white";
       });
 
       if (mode === 'square') {
-        viewport.style.width = '280px';
-        viewport.style.height = '280px';
+        viewport.style.width = '300px';
+        viewport.style.height = '300px';
         safeZone.classList.add('hidden');
-        btnSq.className = "px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
+        btnSq.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
       } else if (mode === 'vertical') {
-        viewport.style.width = '190px';
-        viewport.style.height = '338px'; // 9:16
+        viewport.style.width = '202px';
+        viewport.style.height = '360px'; // 9:16
         safeZone.classList.remove('hidden');
-        btnVert.className = "px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
+        btnVert.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
       } else if (mode === 'horizontal') {
-        viewport.style.width = '338px';
-        viewport.style.height = '190px'; // 16:9
+        viewport.style.width = '360px';
+        viewport.style.height = '202px'; // 16:9
         safeZone.classList.add('hidden');
-        btnHoriz.className = "px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
+        btnHoriz.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
       }
       drawVisualArtwork();
     }
@@ -928,23 +1064,22 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       const subReactive = document.getElementById('sub-options-reactive');
 
       if (track === 'graphic') {
-        tabGraphic.className = "p-3 rounded-lg border border-cyan-500/50 bg-cyan-500/10 text-left transition-all";
-        tabGraphic.querySelector('p').className = "font-bold text-cyan-400";
-        tabReactive.className = "p-3 rounded-lg border border-specular-border bg-obsidian-900 text-left hover:border-slate-500 transition-all";
-        tabReactive.querySelector('p').className = "font-bold text-slate-300";
+        tabGraphic.className = "p-4 rounded-xl border border-cyan-500/50 bg-cyan-500/10 text-left transition-all";
+        tabGraphic.querySelector('p').className = "text-sm font-bold text-cyan-400";
+        tabReactive.className = "p-4 rounded-xl border border-specular-border bg-obsidian-850 text-left hover:border-slate-500 transition-all";
+        tabReactive.querySelector('p').className = "text-sm font-bold text-slate-300";
         subGraphic.classList.remove('hidden');
         subReactive.classList.add('hidden');
       } else {
-        tabReactive.className = "p-3 rounded-lg border border-cyan-500/50 bg-cyan-500/10 text-left transition-all";
-        tabReactive.querySelector('p').className = "font-bold text-cyan-400";
-        tabGraphic.className = "p-3 rounded-lg border border-specular-border bg-obsidian-900 text-left hover:border-slate-500 transition-all";
-        tabGraphic.querySelector('p').className = "font-bold text-slate-300";
+        tabReactive.className = "p-4 rounded-xl border border-cyan-500/50 bg-cyan-500/10 text-left transition-all";
+        tabReactive.querySelector('p').className = "text-sm font-bold text-cyan-400";
+        tabGraphic.className = "p-4 rounded-xl border border-specular-border bg-obsidian-850 text-left hover:border-slate-500 transition-all";
+        tabGraphic.querySelector('p').className = "text-sm font-bold text-slate-300";
         subReactive.classList.remove('hidden');
         subGraphic.classList.add('hidden');
       }
     }
 
-    // Dynamic Artwork Visualizer Canvas
     const visCanvas = document.getElementById('visual-canvas');
     const visCtx = visCanvas.getContext('2d');
     let angle = 0;
@@ -954,11 +1089,11 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       visCanvas.height = document.getElementById('visual-viewport').offsetHeight;
       const w = visCanvas.width;
       const h = visCanvas.height;
+      if (w === 0 || h === 0) return;
 
       visCtx.fillStyle = '#090c12';
       visCtx.fillRect(0, 0, w, h);
 
-      // Draw Lissajous trajectory simulation
       visCtx.save();
       visCtx.translate(w / 2, h / 2);
       visCtx.strokeStyle = '#06b6d4';
@@ -1001,7 +1136,7 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
       }, 2500);
     }
 
-    // 5. MODULE 3: PERSONA PROMPTS & AI COPY
+    // 6. PERSONA PROMPTS & AI COPY
     const personas = {
       techno: "Act as an authoritative underground electronic music PR director. Write high-velocity, club-literate copy emphasizing sub-60Hz kinetic mass and modular analog texture.",
       deephouse: "Act as a sophisticated vinyl culture music journalist. Write warm, atmospheric copy emphasizing tape-saturated chords, soulful warmth, and late-night basement resonance.",
@@ -1011,10 +1146,6 @@ OPERATIONAL_NOTE: Sub fundamental tuned to 46.2 Hz. Calibrated for horn-loaded c
 
     function setPersona(type) {
       document.getElementById('persona-prompt').value = personas[type] || personas.techno;
-    }
-
-    function savePersonaPrompt() {
-      alert("Custom Persona Prompt saved as default for active tenant!");
     }
 
     function generateCopy() {
@@ -1034,7 +1165,7 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
       }, 800);
     }
 
-    // 6. EXPORT ACTIONS: METRICOOL CSV & ICALENDAR
+    // 7. EXPORT ACTIONS
     function downloadMetricoolCSV() {
       const csvContent = `Date,Time,Text,Network,Media_URL
 2026-10-01,18:00,"[ANNOUNCEMENT 1/3] Apex Node - Tactical Selector [APEX005]. Official catalog reveal. Pre-save active.","Instagram;Facebook","https://cloud.vault/art1.png"
@@ -1052,28 +1183,6 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
       const link = document.createElement("a");
       link.setAttribute("href", url);
       link.setAttribute("download", "metricool_campaign_schedule_APEX005.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function downloadICS() {
-      const icsData = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//DCC Release Automation Engine//EN
-BEGIN:VEVENT
-SUMMARY:DCC DROP: Apex Node - Tactical Selector [APEX005]
-DTSTART:20261015T000000Z
-DESCRIPTION:Official Out Now Drop Day. Check Metricool queue.
-STATUS:CONFIRMED
-END:VEVENT
-END:VCALENDAR`;
-
-      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", "release_schedule_APEX005.ics");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
