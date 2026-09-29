@@ -129,34 +129,42 @@
   <nav id="stepper-bar" class="bg-obsidian-950 border-b border-specular-border px-6 py-3 sticky top-16 z-40">
     <div class="max-w-5xl mx-auto flex items-center justify-between font-mono text-xs">
       
-      <!-- Step 1 -->
+      <!-- Phase 1 -->
       <button onclick="goToStep(1)" id="step-btn-1" class="flex items-center gap-2 text-amber-400 font-semibold group cursor-pointer">
         <span class="h-6 w-6 rounded-full bg-amber-500/20 border border-amber-500/60 flex items-center justify-center text-xs font-bold text-amber-300">1</span>
         <span class="tracking-wider">AUDIO & DSP</span>
       </button>
 
-      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
+      <div class="h-0.5 w-8 bg-specular-border hidden md:block"></div>
 
-      <!-- Step 2 -->
+      <!-- Phase 2 -->
       <button onclick="goToStep(2)" id="step-btn-2" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
         <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">2</span>
         <span class="tracking-wider">VISUAL STUDIO</span>
       </button>
 
-      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
+      <div class="h-0.5 w-8 bg-specular-border hidden md:block"></div>
 
-      <!-- Step 3 -->
+      <!-- Phase 3 -->
       <button onclick="goToStep(3)" id="step-btn-3" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
         <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">3</span>
         <span class="tracking-wider">AI PR CAMPAIGN</span>
       </button>
 
-      <div class="h-0.5 w-12 bg-specular-border hidden md:block"></div>
+      <div class="h-0.5 w-8 bg-specular-border hidden md:block"></div>
 
-      <!-- Step 4 -->
+      <!-- Phase 4 -->
       <button onclick="goToStep(4)" id="step-btn-4" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
         <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">4</span>
-        <span class="tracking-wider">DISTRIBUTION HUB</span>
+        <span class="tracking-wider">DISTRIBUTION</span>
+      </button>
+
+      <div class="h-0.5 w-8 bg-specular-border hidden md:block"></div>
+
+      <!-- Phase 5 -->
+      <button onclick="goToStep(5)" id="step-btn-5" class="flex items-center gap-2 text-slate-400 hover:text-slate-200 group cursor-pointer transition-colors">
+        <span class="h-6 w-6 rounded-full bg-obsidian-850 border border-specular-border flex items-center justify-center text-xs text-slate-400 group-hover:border-slate-400">5</span>
+        <span class="tracking-wider">MANIFEST & ANALYTICS</span>
       </button>
     </div>
   </nav>
@@ -289,24 +297,24 @@
         </div>
       </div>
 
-      <!-- Step 1 Footer Action Bar -->
+      <!-- Phase 1 Footer Action Bar -->
       <div class="border-t border-specular-border pt-5 flex items-center justify-between">
         <span class="text-xs font-mono text-slate-400">Audio Telemetry Verified ✓</span>
         <button onclick="goToStep(2)" class="px-6 py-2.5 bg-amber-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-amber-400 transition-colors flex items-center gap-2 shadow-lg">
-          Continue to Step 2: Visual Studio →
+          Continue to Phase 2: Visual Studio →
         </button>
       </div>
     </section>
 
     <!-- ======================================================================= -->
-    <!-- STAGE 2: VISUAL STUDIO & ARTWORK ENGINE -->
+    <!-- PHASE 2: VISUAL STUDIO & ARTWORK ENGINE -->
     <!-- ======================================================================= -->
     <section id="stage-2" class="flex flex-col gap-6 hidden">
       
-      <!-- Stage Header -->
+      <!-- Phase Header -->
       <div class="flex items-center justify-between border-b border-specular-border pb-4">
         <div>
-          <span class="text-xs font-mono text-cyan-400 font-semibold tracking-widest uppercase">Stage 02 // Visual Studio</span>
+          <span class="text-xs font-mono text-cyan-400 font-semibold tracking-widest uppercase">Phase 02 // Visual Studio</span>
           <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Artwork Pipeline & Generative Video Engine</h1>
           <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Select your label's visual track: static branded cover art or audio-reactive TouchDesigner shaders.</p>
         </div>
@@ -395,26 +403,26 @@
         </div>
       </div>
 
-      <!-- Step 2 Footer Action Bar -->
+      <!-- Phase 2 Footer Action Bar -->
       <div class="border-t border-specular-border pt-5 flex items-center justify-between">
         <button onclick="goToStep(1)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
-          ← Back to Audio
+          ← Back to Phase 1
         </button>
         <button onclick="goToStep(3)" class="px-6 py-2.5 bg-cyan-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-cyan-400 transition-colors shadow-lg">
-          Continue to Step 3: AI PR Campaign →
+          Continue to Phase 3: AI PR Campaign →
         </button>
       </div>
     </section>
 
     <!-- ======================================================================= -->
-    <!-- STAGE 3: AI PR & 10-TOUCHPOINT SOCIAL LIFECYCLE MATRIX -->
+    <!-- PHASE 3: AI PR & 10-TOUCHPOINT SOCIAL LIFECYCLE MATRIX -->
     <!-- ======================================================================= -->
     <section id="stage-3" class="flex flex-col gap-6 hidden">
       
-      <!-- Stage Header -->
+      <!-- Phase Header -->
       <div class="flex items-center justify-between border-b border-specular-border pb-4">
         <div>
-          <span class="text-xs font-mono text-emerald-400 font-semibold tracking-widest uppercase">Stage 03 // Promotion & Press</span>
+          <span class="text-xs font-mono text-emerald-400 font-semibold tracking-widest uppercase">Phase 03 // Promotion & Press</span>
           <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">AI PR Marketing & 10-Touchpoint Social Matrix</h1>
           <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Configure your marketing persona and generate an anti-fatigue 10-post social lifecycle campaign.</p>
         </div>
@@ -502,26 +510,26 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         </div>
       </div>
 
-      <!-- Step 3 Footer Action Bar -->
+      <!-- Phase 3 Footer Action Bar -->
       <div class="border-t border-specular-border pt-5 flex items-center justify-between">
         <button onclick="goToStep(2)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
-          ← Back to Visuals
+          ← Back to Phase 2
         </button>
         <button onclick="goToStep(4)" class="px-6 py-2.5 bg-emerald-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-emerald-400 transition-colors shadow-lg">
-          Continue to Step 4: Distribution Hub →
+          Continue to Phase 4: Distribution Hub →
         </button>
       </div>
     </section>
 
     <!-- ======================================================================= -->
-    <!-- STAGE 4: ENTERPRISE DISTRIBUTION & CLOUD VAULT -->
+    <!-- PHASE 4: ENTERPRISE DISTRIBUTION & CLOUD VAULT -->
     <!-- ======================================================================= -->
     <section id="stage-4" class="flex flex-col gap-6 hidden">
       
-      <!-- Stage Header -->
+      <!-- Phase Header -->
       <div class="flex items-center justify-between border-b border-specular-border pb-4">
         <div>
-          <span class="text-xs font-mono text-indigo-400 font-semibold tracking-widest uppercase">Stage 04 // Release Dispatch</span>
+          <span class="text-xs font-mono text-indigo-400 font-semibold tracking-widest uppercase">Phase 04 // Release Dispatch</span>
           <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Enterprise Distribution Gateway & Cloud Vault</h1>
           <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Select your connected distributor, verify pre-flight quality standards, and dispatch the ingestion payload.</p>
         </div>
@@ -589,12 +597,197 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         <p class="text-xs text-slate-400 font-mono">Payload packaged according to DDEX Electronic Release Notification (ERN 4.3)</p>
       </div>
 
-      <!-- Step 4 Footer Action Bar -->
+      <!-- Phase 4 Footer Action Bar -->
       <div class="border-t border-specular-border pt-5 flex items-center justify-between">
         <button onclick="goToStep(3)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
-          ← Back to Campaign
+          ← Back to Phase 3
         </button>
-        <span class="text-xs font-mono text-emerald-400 font-semibold">All Systems Certified & Ready ✓</span>
+        <button onclick="goToStep(5)" class="px-6 py-2.5 bg-indigo-500 text-white font-mono font-bold text-xs rounded-lg hover:bg-indigo-400 transition-colors shadow-lg flex items-center gap-2">
+          Generate Release Manifest (Phase 5) →
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- PHASE 5: RELEASE MANIFEST & CATALOG ANALYTICS HUB -->
+    <!-- ======================================================================= -->
+    <section id="stage-5" class="flex flex-col gap-6 hidden">
+      
+      <!-- Phase Header -->
+      <div class="flex items-center justify-between border-b border-specular-border pb-4">
+        <div>
+          <span class="text-xs font-mono text-indigo-400 font-semibold tracking-widest uppercase">Phase 05 // Executive Manifest & Analytics</span>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Official Release Manifest & Catalog Intelligence</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Audit complete release deliverables, download executive receipts, and monitor live streaming telemetry.</p>
+        </div>
+        <span class="px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-mono font-semibold flex items-center gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span> DISPATCH CERTIFIED
+        </span>
+      </div>
+
+      <!-- Executive Dispatch Receipt / Summary Card -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-specular-border pb-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+            <span class="text-xs font-mono font-bold text-slate-100 uppercase">RELEASE EXECUTION RECEIPT // APEX005</span>
+          </div>
+          <span class="text-xs font-mono text-slate-400">Timestamp: 2026-09-28T20:45:00Z</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">RESOURCE NODE (ARTIST - TITLE):</span>
+              <span class="text-slate-100 font-bold text-sm">Apex Node — Tactical Selector</span>
+            </div>
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">MASTER AUDIO DELIVERABLES:</span>
+              <span class="text-emerald-400 font-semibold">24-bit / 44.1kHz WAV Master + 320kbps MP3 Bundle</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">Headroom: -0.2 dBFS | Monolith Crest: 5.8 dB</p>
+            </div>
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">GENERATIVE VISUAL PACK:</span>
+              <span class="text-cyan-400 font-semibold">60fps Generative Motion Loop (1:1, 9:16, 16:9 DTV)</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">Conductor's Baton Lissajous Flow // F# Minor Palette</p>
+            </div>
+          </div>
+
+          <div class="space-y-2.5">
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">DISTRIBUTION DISPATCH TARGET:</span>
+              <span class="text-indigo-400 font-semibold" id="receipt-distributor">Ampsuite Enterprise Gateway (34 DSPs)</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">Beatport Exclusive Window (14-day) + Global Streaming</p>
+            </div>
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">SOCIAL MARKETING CAMPAIGN:</span>
+              <span class="text-amber-400 font-semibold">10 Scheduled Lifecycle Posts in Metricool Queue</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">3x Announce, 2x Countdown, 1x Out Now, 4x Re-Hype</p>
+            </div>
+            <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
+              <span class="text-slate-400 block text-[10px]">CLASSIFIED CLOUD VAULT URL:</span>
+              <span class="text-emerald-400 font-mono text-[11px] underline">https://vault.labelnetwork.com/apex005-promo</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">Read-Only High-Res Audio & Stems Vault for DJs</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-specular-border pt-3 flex flex-wrap gap-2 justify-end">
+          <button onclick="alert('Exporting official Executive Release Manifest PDF & JSON bundle...')" class="px-4 py-2 bg-obsidian-900 border border-specular-border text-slate-200 hover:text-white font-mono text-xs rounded-lg flex items-center gap-2">
+            📥 Download Executive Release Receipt (PDF)
+          </button>
+          <button onclick="alert('Copied DJ Promo Vault link to clipboard!')" class="px-4 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-semibold rounded-lg hover:bg-emerald-500/30">
+            🔗 Copy DJ Promo Vault Link
+          </button>
+        </div>
+      </div>
+
+      <!-- In-Development: Label Catalog Analytics & Statistics Hub -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-specular-border pb-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+            <span class="text-xs font-mono font-bold text-slate-100 uppercase">CATALOG STREAMING PERFORMANCE & TELEMETRY</span>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-mono uppercase">
+            In Development // Enterprise Roadmap
+          </span>
+        </div>
+
+        <!-- 4 Key Analytics Metric Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 font-mono text-xs">
+          <div class="bg-obsidian-900 p-3.5 rounded-xl border border-specular-border">
+            <span class="text-slate-400 text-[10px] uppercase">TOTAL CATALOG STREAMS</span>
+            <p class="text-xl font-bold text-emerald-400 mt-1">1,420,800</p>
+            <span class="text-[10px] text-emerald-400 font-sans">↑ 18.4% vs last month</span>
+          </div>
+          <div class="bg-obsidian-900 p-3.5 rounded-xl border border-specular-border">
+            <span class="text-slate-400 text-[10px] uppercase">ACTIVE RETAILERS</span>
+            <p class="text-xl font-bold text-slate-100 mt-1">34 DSPs</p>
+            <span class="text-[10px] text-slate-400 font-sans">Beatport, Spotify, Apple...</span>
+          </div>
+          <div class="bg-obsidian-900 p-3.5 rounded-xl border border-specular-border">
+            <span class="text-slate-400 text-[10px] uppercase">PEAK CHART POSITION</span>
+            <p class="text-xl font-bold text-amber-400 mt-1">#14 Top 100</p>
+            <span class="text-[10px] text-amber-400 font-sans">Beatport Peak-Time Techno</span>
+          </div>
+          <div class="bg-obsidian-900 p-3.5 rounded-xl border border-specular-border">
+            <span class="text-slate-400 text-[10px] uppercase">NET ROYALTY ACCRUAL</span>
+            <p class="text-xl font-bold text-cyan-400 mt-1">$6,840.50</p>
+            <span class="text-[10px] text-slate-400 font-sans">Next payout: Nov 15</span>
+          </div>
+        </div>
+
+        <!-- Historical Catalog Releases Table -->
+        <div class="flex flex-col gap-1.5 font-mono text-xs">
+          <span class="text-slate-400 text-[11px] uppercase">LABEL CATALOG OVERVIEW:</span>
+          <div class="overflow-x-auto rounded-lg border border-specular-border bg-obsidian-900">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-specular-border text-[10px] text-slate-400 uppercase bg-obsidian-950">
+                  <th class="p-2.5">Catalog #</th>
+                  <th class="p-2.5">Resource Node (Title)</th>
+                  <th class="p-2.5">Release Date</th>
+                  <th class="p-2.5">Total Streams</th>
+                  <th class="p-2.5">Peak Position</th>
+                  <th class="p-2.5 text-right">Delivery Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-specular-border/50 text-[11px]">
+                <tr class="hover:bg-obsidian-850">
+                  <td class="p-2.5 font-bold text-amber-400">APEX005</td>
+                  <td class="p-2.5 text-slate-100 font-semibold">Tactical Selector (Apex Node)</td>
+                  <td class="p-2.5 text-slate-400">2026-10-15</td>
+                  <td class="p-2.5 text-slate-300">-- (Pre-Release)</td>
+                  <td class="p-2.5 text-slate-400">--</td>
+                  <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Ingestion Queued</span></td>
+                </tr>
+                <tr class="hover:bg-obsidian-850">
+                  <td class="p-2.5 font-bold text-amber-400">APEX004</td>
+                  <td class="p-2.5 text-slate-100">Neural Shift Ep.</td>
+                  <td class="p-2.5 text-slate-400">2026-08-20</td>
+                  <td class="p-2.5 text-slate-300">210,400</td>
+                  <td class="p-2.5 text-amber-400">#24 Peak-Time</td>
+                  <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Active Live</span></td>
+                </tr>
+                <tr class="hover:bg-obsidian-850">
+                  <td class="p-2.5 font-bold text-amber-400">APEX003</td>
+                  <td class="p-2.5 text-slate-100">Sub Fundamental Matrix</td>
+                  <td class="p-2.5 text-slate-400">2026-06-12</td>
+                  <td class="p-2.5 text-slate-300">280,600</td>
+                  <td class="p-2.5 text-amber-400">#12 Techno</td>
+                  <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Active Live</span></td>
+                </tr>
+                <tr class="hover:bg-obsidian-850">
+                  <td class="p-2.5 font-bold text-amber-400">APEX002</td>
+                  <td class="p-2.5 text-slate-100">Modular Drift V1</td>
+                  <td class="p-2.5 text-slate-400">2026-04-05</td>
+                  <td class="p-2.5 text-slate-300">310,800</td>
+                  <td class="p-2.5 text-amber-400">#19 Techno</td>
+                  <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Active Live</span></td>
+                </tr>
+                <tr class="hover:bg-obsidian-850">
+                  <td class="p-2.5 font-bold text-amber-400">APEX001</td>
+                  <td class="p-2.5 text-slate-100">Vector Horizon (Inaugural)</td>
+                  <td class="p-2.5 text-slate-400">2026-02-01</td>
+                  <td class="p-2.5 text-slate-300">618,600</td>
+                  <td class="p-2.5 text-emerald-400 font-bold">#8 Top 10</td>
+                  <td class="p-2.5 text-right"><span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Active Live</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5 Footer Action Bar -->
+      <div class="border-t border-specular-border pt-5 flex items-center justify-between">
+        <button onclick="goToStep(4)" class="px-5 py-2 bg-obsidian-850 text-slate-300 border border-specular-border font-mono text-xs rounded-lg hover:text-white transition-colors">
+          ← Back to Phase 4
+        </button>
+        <button onclick="goToStep(1)" class="px-6 py-2.5 bg-amber-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-amber-400 transition-colors shadow-lg flex items-center gap-2">
+          Start New Release Pipeline ↺
+        </button>
       </div>
     </section>
 
@@ -773,7 +966,7 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
     function goToStep(step) {
       currentStep = step;
       if (viewMode === 'guided') {
-        [1, 2, 3, 4].forEach(s => {
+        [1, 2, 3, 4, 5].forEach(s => {
           const el = document.getElementById('stage-' + s);
           const btn = document.getElementById('step-btn-' + s);
           if (s === step) {
@@ -806,7 +999,7 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         btnO.className = "px-3 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold flex items-center gap-1.5 transition-all";
         btnG.className = "px-3 py-1 rounded text-slate-400 hover:text-white flex items-center gap-1.5 transition-all";
         stepper.classList.add('hidden');
-        [1, 2, 3, 4].forEach(s => {
+        [1, 2, 3, 4, 5].forEach(s => {
           document.getElementById('stage-' + s).classList.remove('hidden');
         });
         setTimeout(drawWaveform, 50);
@@ -959,6 +1152,14 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         btn.classList.remove('bg-indigo-500', 'hover:bg-indigo-400');
         btn.classList.add('bg-emerald-500', 'text-obsidian-950');
         msg.innerText = `ACK_RECEIVED // Batch Accepted by ${prof.name}`;
+        
+        const receiptDist = document.getElementById('receipt-distributor');
+        if (receiptDist) receiptDist.innerText = `${prof.name} (34 Global DSPs & Beatport)`;
+
+        setTimeout(() => {
+          closeDistributorModal();
+          goToStep(5);
+        }, 1200);
       }, 1200);
     }
 
