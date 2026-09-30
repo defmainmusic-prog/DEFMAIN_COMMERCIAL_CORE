@@ -635,16 +635,179 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
           <span class="text-xs font-mono text-slate-400">Timestamp: 2026-09-28T20:45:00Z</span>
         </div>
 
+        <!-- Release Barcode (UPC / EAN-13) & Identification Header Card -->
+        <div class="p-4 rounded-xl bg-obsidian-900 border border-amber-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider">RELEASE BARCODE IDENTIFIER (UPC / EAN-13)</span>
+              <span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono font-semibold">GS1 VALIDATED</span>
+              <span class="px-1.5 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-[9px] font-mono">GLOBAL PACK</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-2xl md:text-3xl font-mono font-black text-slate-100 tracking-widest select-all">5059432018491</span>
+              <button onclick="navigator.clipboard.writeText('5059432018491'); alert('Copied Release UPC (5059432018491) to clipboard!')" class="px-2.5 py-1 rounded bg-obsidian-800 hover:bg-obsidian-750 border border-specular-border text-[11px] text-slate-300 hover:text-white font-mono flex items-center gap-1.5 transition-colors" title="Copy UPC Barcode">
+                📋 Copy UPC
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-400 font-mono">Universal Product Code binding all 3 master tracks, visual loop assets, and metadata into a unified retail product.</p>
+          </div>
+
+          <!-- Stylized High-Density Barcode Graphic -->
+          <div class="bg-white p-2.5 rounded-lg flex flex-col items-center justify-center shadow-lg border border-slate-300 shrink-0">
+            <svg class="w-44 h-10" viewBox="0 0 160 36" fill="black">
+              <rect x="2" y="2" width="2" height="26"/>
+              <rect x="6" y="2" width="1" height="26"/>
+              <rect x="9" y="2" width="3" height="26"/>
+              <rect x="14" y="2" width="1" height="26"/>
+              <rect x="17" y="2" width="2" height="26"/>
+              <rect x="21" y="2" width="4" height="26"/>
+              <rect x="27" y="2" width="1" height="26"/>
+              <rect x="30" y="2" width="2" height="26"/>
+              <rect x="34" y="2" width="3" height="26"/>
+              <rect x="39" y="2" width="1" height="26"/>
+              <rect x="42" y="2" width="2" height="26"/>
+              <rect x="46" y="2" width="3" height="26"/>
+              <rect x="51" y="2" width="1" height="26"/>
+              <rect x="54" y="2" width="2" height="26"/>
+              <rect x="58" y="2" width="4" height="26"/>
+              <rect x="64" y="2" width="1" height="26"/>
+              <rect x="67" y="2" width="2" height="26"/>
+              <rect x="71" y="2" width="1" height="26"/>
+              <rect x="74" y="2" width="3" height="26"/>
+              <rect x="79" y="2" width="2" height="26"/>
+              <rect x="83" y="2" width="1" height="26"/>
+              <rect x="86" y="2" width="3" height="26"/>
+              <rect x="91" y="2" width="2" height="26"/>
+              <rect x="95" y="2" width="4" height="26"/>
+              <rect x="101" y="2" width="1" height="26"/>
+              <rect x="104" y="2" width="2" height="26"/>
+              <rect x="108" y="2" width="3" height="26"/>
+              <rect x="113" y="2" width="2" height="26"/>
+              <rect x="117" y="2" width="1" height="26"/>
+              <rect x="120" y="2" width="4" height="26"/>
+              <rect x="126" y="2" width="2" height="26"/>
+              <rect x="130" y="2" width="1" height="26"/>
+              <rect x="133" y="2" width="3" height="26"/>
+              <rect x="138" y="2" width="1" height="26"/>
+              <rect x="141" y="2" width="3" height="26"/>
+              <rect x="146" y="2" width="2" height="26"/>
+              <rect x="150" y="2" width="1" height="26"/>
+              <rect x="153" y="2" width="3" height="26"/>
+              <rect x="158" y="2" width="2" height="26"/>
+            </svg>
+            <span class="text-[9px] font-mono font-bold text-black tracking-[0.22em] leading-none mt-1">5 059432 018491</span>
+          </div>
+        </div>
+
+        <!-- Itemized Track Deliverables & Per-Track ISRC Matrix -->
+        <div class="rounded-xl border border-specular-border bg-obsidian-900 p-4 space-y-3">
+          <div class="flex items-center justify-between border-b border-specular-border pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono font-bold text-slate-100 uppercase">ITEMIZED TRACKLIST & INDIVIDUAL ISRC CODES</span>
+              <span class="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20 font-semibold">3 Tracks Certified</span>
+            </div>
+            <span class="text-[10px] font-mono text-slate-400">Standard: ISO 3901 // Global Recording Fingerprint</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left font-mono text-xs">
+              <thead>
+                <tr class="text-[10px] text-slate-400 uppercase border-b border-specular-border/50">
+                  <th class="py-2 px-2.5">#</th>
+                  <th class="py-2 px-2.5">Track Title & Mix Version</th>
+                  <th class="py-2 px-2.5 text-cyan-300">Track ISRC Code</th>
+                  <th class="py-2 px-2.5">Duration</th>
+                  <th class="py-2 px-2.5">Tempo / Key</th>
+                  <th class="py-2 px-2.5">Master Format</th>
+                  <th class="py-2 px-2.5 text-right">Verification</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-specular-border/40 text-[11px]">
+                <tr class="hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-2.5 px-2.5 font-bold text-amber-400">01</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-slate-100 font-semibold block">Tactical Selector</span>
+                    <span class="text-[10px] text-slate-400">Original Club Mix</span>
+                  </td>
+                  <td class="py-2.5 px-2.5">
+                    <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-2.5 py-1 rounded">
+                      <span class="font-bold text-cyan-300 font-mono tracking-wider select-all">US-DCC-26-00014</span>
+                      <button onclick="navigator.clipboard.writeText('US-DCC-26-00014'); alert('Copied Track 01 ISRC (US-DCC-26-00014) to clipboard!')" class="text-cyan-400 hover:text-white transition-colors" title="Copy ISRC">📋</button>
+                    </div>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-slate-300">06:24</td>
+                  <td class="py-2.5 px-2.5 text-slate-300">138 BPM / F#m</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-emerald-400 font-medium">24-bit / 44.1kHz WAV</span>
+                    <span class="block text-[9px] text-slate-400">-0.2 dBFS Peak</span>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-right">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-semibold">VALIDATED</span>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-2.5 px-2.5 font-bold text-amber-400">02</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-slate-100 font-semibold block">Tactical Selector</span>
+                    <span class="text-[10px] text-slate-400">Dub Accelerator Mix</span>
+                  </td>
+                  <td class="py-2.5 px-2.5">
+                    <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-2.5 py-1 rounded">
+                      <span class="font-bold text-cyan-300 font-mono tracking-wider select-all">US-DCC-26-00015</span>
+                      <button onclick="navigator.clipboard.writeText('US-DCC-26-00015'); alert('Copied Track 02 ISRC (US-DCC-26-00015) to clipboard!')" class="text-cyan-400 hover:text-white transition-colors" title="Copy ISRC">📋</button>
+                    </div>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-slate-300">05:48</td>
+                  <td class="py-2.5 px-2.5 text-slate-300">138 BPM / F#m</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-emerald-400 font-medium">24-bit / 44.1kHz WAV</span>
+                    <span class="block text-[9px] text-slate-400">-0.2 dBFS Peak</span>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-right">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-semibold">VALIDATED</span>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-obsidian-850/60 transition-colors">
+                  <td class="py-2.5 px-2.5 font-bold text-amber-400">03</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-slate-100 font-semibold block">Tactical Selector</span>
+                    <span class="text-[10px] text-slate-400">Radio & Streaming Edit</span>
+                  </td>
+                  <td class="py-2.5 px-2.5">
+                    <div class="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-2.5 py-1 rounded">
+                      <span class="font-bold text-cyan-300 font-mono tracking-wider select-all">US-DCC-26-00016</span>
+                      <button onclick="navigator.clipboard.writeText('US-DCC-26-00016'); alert('Copied Track 03 ISRC (US-DCC-26-00016) to clipboard!')" class="text-cyan-400 hover:text-white transition-colors" title="Copy ISRC">📋</button>
+                    </div>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-slate-300">03:45</td>
+                  <td class="py-2.5 px-2.5 text-slate-300">138 BPM / F#m</td>
+                  <td class="py-2.5 px-2.5">
+                    <span class="text-emerald-400 font-medium">24-bit / 44.1kHz WAV</span>
+                    <span class="block text-[9px] text-slate-400">-0.2 dBFS Peak</span>
+                  </td>
+                  <td class="py-2.5 px-2.5 text-right">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-semibold">VALIDATED</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Release Metadata & Distribution Deliverables Breakdown -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
           <div class="space-y-2.5">
             <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
               <span class="text-slate-400 block text-[10px]">RESOURCE NODE (ARTIST - TITLE):</span>
               <span class="text-slate-100 font-bold text-sm">Apex Node — Tactical Selector</span>
+              <span class="text-[10px] text-amber-400 block mt-0.5">Catalog: APEX005 | UPC: 5059432018491</span>
             </div>
             <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
               <span class="text-slate-400 block text-[10px]">MASTER AUDIO DELIVERABLES:</span>
-              <span class="text-emerald-400 font-semibold">24-bit / 44.1kHz WAV Master + 320kbps MP3 Bundle</span>
-              <p class="text-[10px] text-slate-400 mt-0.5">Headroom: -0.2 dBFS | Monolith Crest: 5.8 dB</p>
+              <span class="text-emerald-400 font-semibold">3x 24-bit / 44.1kHz WAV Masters + 320kbps MP3s</span>
+              <p class="text-[10px] text-slate-400 mt-0.5">True Peak: -0.2 dBFS | Monolith Crest Factor: 5.8 dB</p>
             </div>
             <div class="p-2.5 rounded bg-obsidian-900 border border-specular-border">
               <span class="text-slate-400 block text-[10px]">GENERATIVE VISUAL PACK:</span>
@@ -673,10 +836,13 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         </div>
 
         <div class="border-t border-specular-border pt-3 flex flex-wrap gap-2 justify-end">
-          <button onclick="alert('Exporting official Executive Release Manifest PDF & JSON bundle...')" class="px-4 py-2 bg-obsidian-900 border border-specular-border text-slate-200 hover:text-white font-mono text-xs rounded-lg flex items-center gap-2">
-            📥 Download Executive Release Receipt (PDF)
+          <button onclick="downloadManifestJSON()" class="px-4 py-2 bg-obsidian-900 border border-specular-border text-slate-200 hover:text-white font-mono text-xs rounded-lg flex items-center gap-2 hover:border-amber-400/50 transition-colors">
+            📥 Download Executive Release Manifest (JSON / DDEX)
           </button>
-          <button onclick="alert('Copied DJ Promo Vault link to clipboard!')" class="px-4 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-semibold rounded-lg hover:bg-emerald-500/30">
+          <button onclick="window.print()" class="px-4 py-2 bg-obsidian-900 border border-specular-border text-slate-200 hover:text-white font-mono text-xs rounded-lg flex items-center gap-2 hover:border-slate-500 transition-colors">
+            📄 Print Receipt (PDF)
+          </button>
+          <button onclick="navigator.clipboard.writeText('https://vault.labelnetwork.com/apex005-promo'); alert('Copied DJ Promo Vault link to clipboard!')" class="px-4 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono text-xs font-semibold rounded-lg hover:bg-emerald-500/30 transition-colors">
             🔗 Copy DJ Promo Vault Link
           </button>
         </div>
@@ -720,13 +886,15 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
 
         <!-- Historical Catalog Releases Table -->
         <div class="flex flex-col gap-1.5 font-mono text-xs">
-          <span class="text-slate-400 text-[11px] uppercase">LABEL CATALOG OVERVIEW:</span>
+          <span class="text-slate-400 text-[11px] uppercase">LABEL CATALOG OVERVIEW & ISRC INVENTORY:</span>
           <div class="overflow-x-auto rounded-lg border border-specular-border bg-obsidian-900">
             <table class="w-full text-left border-collapse">
               <thead>
                 <tr class="border-b border-specular-border text-[10px] text-slate-400 uppercase bg-obsidian-950">
                   <th class="p-2.5">Catalog #</th>
+                  <th class="p-2.5 text-amber-300">UPC / Barcode</th>
                   <th class="p-2.5">Resource Node (Title)</th>
+                  <th class="p-2.5 text-cyan-300">ISRC Code(s)</th>
                   <th class="p-2.5">Release Date</th>
                   <th class="p-2.5">Total Streams</th>
                   <th class="p-2.5">Peak Position</th>
@@ -736,7 +904,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
               <tbody class="divide-y divide-specular-border/50 text-[11px]">
                 <tr class="hover:bg-obsidian-850">
                   <td class="p-2.5 font-bold text-amber-400">APEX005</td>
+                  <td class="p-2.5 text-amber-300 font-mono font-semibold">5059432018491</td>
                   <td class="p-2.5 text-slate-100 font-semibold">Tactical Selector (Apex Node)</td>
+                  <td class="p-2.5 text-cyan-300 font-mono text-[10px]">3 Tracks (US-DCC-26-00014..16)</td>
                   <td class="p-2.5 text-slate-400">2026-10-15</td>
                   <td class="p-2.5 text-slate-300">-- (Pre-Release)</td>
                   <td class="p-2.5 text-slate-400">--</td>
@@ -744,7 +914,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
                 </tr>
                 <tr class="hover:bg-obsidian-850">
                   <td class="p-2.5 font-bold text-amber-400">APEX004</td>
+                  <td class="p-2.5 text-slate-300 font-mono">5059432018484</td>
                   <td class="p-2.5 text-slate-100">Neural Shift Ep.</td>
+                  <td class="p-2.5 text-cyan-400 font-mono text-[10px]">2 Tracks (US-DCC-26-00012..13)</td>
                   <td class="p-2.5 text-slate-400">2026-08-20</td>
                   <td class="p-2.5 text-slate-300">210,400</td>
                   <td class="p-2.5 text-amber-400">#24 Peak-Time</td>
@@ -752,7 +924,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
                 </tr>
                 <tr class="hover:bg-obsidian-850">
                   <td class="p-2.5 font-bold text-amber-400">APEX003</td>
+                  <td class="p-2.5 text-slate-300 font-mono">5059432018477</td>
                   <td class="p-2.5 text-slate-100">Sub Fundamental Matrix</td>
+                  <td class="p-2.5 text-cyan-400 font-mono text-[10px]">2 Tracks (US-DCC-26-00010..11)</td>
                   <td class="p-2.5 text-slate-400">2026-06-12</td>
                   <td class="p-2.5 text-slate-300">280,600</td>
                   <td class="p-2.5 text-amber-400">#12 Techno</td>
@@ -760,7 +934,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
                 </tr>
                 <tr class="hover:bg-obsidian-850">
                   <td class="p-2.5 font-bold text-amber-400">APEX002</td>
+                  <td class="p-2.5 text-slate-300 font-mono">5059432018460</td>
                   <td class="p-2.5 text-slate-100">Modular Drift V1</td>
+                  <td class="p-2.5 text-cyan-400 font-mono text-[10px]">1 Track (US-DCC-26-00009)</td>
                   <td class="p-2.5 text-slate-400">2026-04-05</td>
                   <td class="p-2.5 text-slate-300">310,800</td>
                   <td class="p-2.5 text-amber-400">#19 Techno</td>
@@ -768,7 +944,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
                 </tr>
                 <tr class="hover:bg-obsidian-850">
                   <td class="p-2.5 font-bold text-amber-400">APEX001</td>
+                  <td class="p-2.5 text-slate-300 font-mono">5059432018453</td>
                   <td class="p-2.5 text-slate-100">Vector Horizon (Inaugural)</td>
+                  <td class="p-2.5 text-cyan-400 font-mono text-[10px]">2 Tracks (US-DCC-26-00007..08)</td>
                   <td class="p-2.5 text-slate-400">2026-02-01</td>
                   <td class="p-2.5 text-slate-300">618,600</td>
                   <td class="p-2.5 text-emerald-400 font-bold">#8 Top 10</td>
@@ -1384,6 +1562,89 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
       const link = document.createElement("a");
       link.setAttribute("href", url);
       link.setAttribute("download", "metricool_campaign_schedule_APEX005.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function downloadManifestJSON() {
+      const manifest = {
+        schema: "DDEX-ERN-4.3-COMMERCIAL-CORE",
+        release_id: "US-DCC-26-R0005",
+        catalog_number: "APEX005",
+        upc: "5059432018491",
+        ean_13: "5059432018491",
+        barcode_standard: "GS1-128 / EAN-13 Validated",
+        release_title: "Tactical Selector",
+        display_artist: "Apex Node",
+        release_type: "EP / Single Bundle",
+        genre: "Peak-Time / Driving Techno",
+        release_date: "2026-10-15",
+        c_line: "(C) 2026 DCC Commercial Core Recordings",
+        p_line: "(P) 2026 DCC Commercial Core Recordings",
+        distributor_target: "Ampsuite Enterprise Gateway (34 DSPs)",
+        territory_coverage: "Worldwide (WW)",
+        tracks_count: 3,
+        tracks: [
+          {
+            track_number: 1,
+            title: "Tactical Selector",
+            mix_version: "Original Club Mix",
+            isrc: "US-DCC-26-00014",
+            duration: "06:24",
+            tempo_bpm: 138,
+            musical_key: "F# Minor",
+            audio_spec: "24-bit / 44.1kHz WAV Master",
+            peak_headroom_dbfs: -0.2,
+            monolith_crest_db: 5.8,
+            explicit: false
+          },
+          {
+            track_number: 2,
+            title: "Tactical Selector",
+            mix_version: "Dub Accelerator Mix",
+            isrc: "US-DCC-26-00015",
+            duration: "05:48",
+            tempo_bpm: 138,
+            musical_key: "F# Minor",
+            audio_spec: "24-bit / 44.1kHz WAV Master",
+            peak_headroom_dbfs: -0.2,
+            monolith_crest_db: 6.1,
+            explicit: false
+          },
+          {
+            track_number: 3,
+            title: "Tactical Selector",
+            mix_version: "Radio & Streaming Edit",
+            isrc: "US-DCC-26-00016",
+            duration: "03:45",
+            tempo_bpm: 138,
+            musical_key: "F# Minor",
+            audio_spec: "24-bit / 44.1kHz WAV Master",
+            peak_headroom_dbfs: -0.2,
+            monolith_crest_db: 5.4,
+            explicit: false
+          }
+        ],
+        visual_deliverables: {
+          motion_loop_60fps: "1:1, 9:16, 16:9 DTV (Conductor's Baton Lissajous Flow)",
+          static_covers: "3000x3000px 300DPI RGB Master"
+        },
+        social_marketing_campaign: {
+          platform: "Metricool Automated Campaign Queue",
+          touchpoints_count: 10,
+          csv_export: "metricool_campaign_schedule_APEX005.csv"
+        },
+        dj_promo_vault: "https://vault.labelnetwork.com/apex005-promo",
+        manifest_generated_at: new Date().toISOString()
+      };
+
+      const jsonStr = JSON.stringify(manifest, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "release_manifest_APEX005_UPC_ISRC.json");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
