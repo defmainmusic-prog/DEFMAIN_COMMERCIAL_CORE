@@ -315,37 +315,40 @@
       <div class="flex items-center justify-between border-b border-specular-border pb-4">
         <div>
           <span class="text-xs font-mono text-cyan-400 font-semibold tracking-widest uppercase">Phase 02 // Visual Studio</span>
-          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Artwork Pipeline & Generative Video Engine</h1>
-          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Select your label's visual track: autonomous audio-reactive TouchDesigner 3D shaders or static cover art.</p>
+          <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Artwork & Generative Graphic Engine</h1>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Dual output studio: generate official 1:1 static release cover artwork for DSPs AND render multi-format 60fps promotional content videos.</p>
         </div>
-        <!-- 3-Way Aspect Ratio Switcher -->
-        <div class="flex items-center bg-obsidian-850 rounded-lg p-1 border border-specular-border text-xs font-mono">
-          <button onclick="setAspect('square')" id="btn-aspect-square" class="px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold">1:1 Square</button>
-          <button onclick="setAspect('vertical')" id="btn-aspect-vertical" class="px-3 py-1 rounded text-slate-400 hover:text-white">9:16 Reels</button>
-          <button onclick="setAspect('horizontal')" id="btn-aspect-horizontal" class="px-3 py-1 rounded text-slate-400 hover:text-white">16:9 DTV</button>
+        <div class="hidden md:flex items-center gap-2">
+          <span class="px-2.5 py-1 rounded bg-obsidian-850 border border-specular-border text-[11px] font-mono text-slate-300">
+            🖼️ 1:1 Static Cover Art
+          </span>
+          <span class="text-slate-500 font-mono">+</span>
+          <span class="px-2.5 py-1 rounded bg-obsidian-850 border border-specular-border text-[11px] font-mono text-cyan-300">
+            🎬 9:16 & 16:9 Content Video
+          </span>
         </div>
       </div>
 
       <!-- Top-Level Visual Pipeline Selector (Audio-Reactive Hero Option #1) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-        <!-- OPTION 1: AUDIO-REACTIVE (FLAGSHIP HERO) -->
+        <!-- OPTION 1: AUDIO-REACTIVE VISUAL (FLAGSHIP HERO) -->
         <button onclick="setVisualTrack('reactive')" id="tab-reactive" class="p-4 rounded-xl border-2 border-cyan-400 bg-gradient-to-br from-cyan-950/40 via-obsidian-900 to-obsidian-850 text-left shadow-lg shadow-cyan-500/10 transition-all relative overflow-hidden group">
           <div class="absolute -right-12 -top-12 w-28 h-28 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-cyan-500/20 transition-colors"></div>
           <div class="flex items-center justify-between">
             <span class="text-sm font-bold text-cyan-300 flex items-center gap-2 tab-title">
-              <span class="h-2 w-2 rounded-full bg-cyan-400 pulse-glow"></span> OPTION 1: AUDIO-REACTIVE VIDEO
+              <span class="h-2 w-2 rounded-full bg-cyan-400 pulse-glow"></span> OPTION 1: AUDIO-REACTIVE VISUAL
             </span>
             <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-400/40 text-[10px] font-mono font-bold tracking-wider">
               ✨ CORE SUPERPOWER
             </span>
           </div>
           <p class="text-xs text-slate-200 mt-2 font-sans leading-relaxed">
-            Real-time TouchDesigner 3D shaders with autonomous Conductor's Baton Lissajous trajectories, 4-beat kick snap-stop (Ictus groove), and track-key color modulation.
+            Real-time TouchDesigner 3D shaders generating both high-res 1:1 static cover art captures and autonomous 60fps promotional video loops with Conductor's Baton Lissajous trajectories.
           </p>
           <div class="mt-3 flex flex-wrap gap-1.5 text-[10px] text-cyan-400/90 font-mono">
             <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">⚡ TouchDesigner Core</span>
-            <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">🎛️ Conductor's Baton 3D</span>
-            <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">📐 1:1, 9:16 & 16:9</span>
+            <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">🖼️ 1:1 Cover Art Capture</span>
+            <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">🎬 9:16 & 16:9 Promo Video</span>
             <span class="px-2 py-0.5 rounded bg-obsidian-950 border border-cyan-500/30">🎚️ 4-Beat Kick Snap</span>
           </div>
         </button>
@@ -361,10 +364,10 @@
             </span>
           </div>
           <p class="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
-            For releases with pre-rendered album sleeves or record labels utilizing standardized 2D typography templates and graphic artwork.
+            For releases with pre-rendered 1:1 album covers or record labels using standardized typography templates. DCC crops static visuals and produces static promo card clips.
           </p>
           <div class="mt-3 flex flex-wrap gap-1.5 text-[10px] text-slate-400 font-mono">
-            <span class="px-2 py-0.5 rounded bg-obsidian-900 border border-specular-border">🖼️ 3000x3000px Master</span>
+            <span class="px-2 py-0.5 rounded bg-obsidian-900 border border-specular-border">🖼️ 3000x3000px Master Cover</span>
             <span class="px-2 py-0.5 rounded bg-obsidian-900 border border-specular-border">🔤 Cairo Typography Engine</span>
             <span class="px-2 py-0.5 rounded bg-obsidian-900 border border-specular-border">✂️ Auto Social Crops</span>
           </div>
@@ -430,12 +433,50 @@
         </div>
       </div>
 
+      <!-- Studio Output Selector: Separate Cover Artwork from Content Videos -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-obsidian-850 border border-specular-border">
+        <div>
+          <span class="text-[10px] font-mono uppercase text-slate-400 block font-semibold">STUDIO OUTPUT SELECTOR:</span>
+          <p class="text-xs text-slate-200 font-sans mt-0.5" id="output-desc">Generating Output 1: Official 1:1 Static Cover Artwork (3000 x 3000px Master for DSPs)</p>
+        </div>
+        <div class="flex items-center gap-2 bg-obsidian-900 p-1 rounded-lg border border-specular-border shrink-0">
+          <button onclick="setOutputMode('artwork')" id="btn-out-artwork" class="px-3.5 py-1.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-semibold flex items-center gap-1.5 border border-cyan-500/40 transition-all">
+            🖼️ 1:1 Static Cover Artwork
+          </button>
+          <button onclick="setOutputMode('video')" id="btn-out-video" class="px-3.5 py-1.5 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all">
+            🎬 60fps Content Video
+          </button>
+        </div>
+      </div>
+
       <!-- Centered Interactive Viewport with Real-Time Telemetry HUD -->
       <div class="bg-obsidian-850 rounded-xl p-6 specular-border flex flex-col items-center justify-center min-h-[380px] relative overflow-hidden">
+        
+        <!-- Video Aspect Ratio Bar (Visible only when Content Video is selected) -->
+        <div id="video-aspect-bar" class="w-full max-w-xl mb-3 flex items-center justify-between text-xs font-mono hidden">
+          <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> SELECT CONTENT VIDEO ASPECT RATIO:
+          </span>
+          <div class="flex items-center bg-obsidian-900 rounded-lg p-1 border border-specular-border">
+            <button onclick="setVideoAspect('vertical')" id="btn-aspect-vertical" class="px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold">9:16 Reels / TikTok</button>
+            <button onclick="setVideoAspect('horizontal')" id="btn-aspect-horizontal" class="px-3 py-1 rounded text-slate-400 hover:text-white">16:9 DTV / YouTube</button>
+          </div>
+        </div>
+
+        <!-- Static Artwork Metadata Bar (Visible when Cover Art is selected) -->
+        <div id="artwork-info-bar" class="w-full max-w-xl mb-3 flex items-center justify-between text-xs font-mono">
+          <span class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-1">
+            <span class="h-1.5 w-1.5 rounded-full bg-cyan-400"></span> RELEASE COVER ARTWORK SPECIFICATION:
+          </span>
+          <span class="text-[10px] text-slate-300 bg-obsidian-900 px-2.5 py-1 rounded border border-specular-border">
+            3000 x 3000 px • 1:1 Square • RGB / 300 DPI (Static Image Master)
+          </span>
+        </div>
+
         <!-- Generative HUD Status Strip -->
         <div class="w-full max-w-xl mb-3 flex items-center justify-between text-[10px] font-mono text-slate-400 border-b border-specular-border/60 pb-2">
-          <span class="flex items-center gap-1.5 text-cyan-300 font-semibold">
-            <span class="h-2 w-2 rounded-full bg-cyan-400 pulse-glow"></span> TOUCHDESIGNER 60FPS ENGINE
+          <span class="flex items-center gap-1.5 text-cyan-300 font-semibold" id="hud-engine-mode">
+            <span class="h-2 w-2 rounded-full bg-cyan-400 pulse-glow"></span> TOUCHDESIGNER CORE [STATIC 1:1 CAPTURE]
           </span>
           <span class="hidden sm:inline text-slate-400">CHOREOGRAPHY: CONDUCTOR'S BATON</span>
           <span class="text-amber-400 font-mono">138.0 BPM SYNC</span>
@@ -449,21 +490,28 @@
             <span>SOCIAL SAFE ZONE (BOTTOM 200px)</span>
           </div>
 
-          <div class="absolute bottom-3 left-3 bg-obsidian-950/80 backdrop-blur px-2.5 py-1 rounded text-[10px] font-mono text-slate-300 border border-specular-border">
-            APEX // 005 [MASTER VIDEO]
+          <div id="viewport-label" class="absolute bottom-3 left-3 bg-obsidian-950/80 backdrop-blur px-2.5 py-1 rounded text-[10px] font-mono text-slate-300 border border-specular-border">
+            APEX // 005 [STATIC 1:1 COVER ART]
           </div>
         </div>
 
-        <!-- Viewport Controls & Interactive Kick Simulator -->
+        <!-- Viewport Controls & Dynamic Action Buttons -->
         <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
-          <button onclick="renderVisualMaster()" id="btn-render-visual" class="px-5 py-2.5 rounded-lg text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all flex items-center gap-2 shadow-lg hover:border-cyan-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            Render 60fps Generative Master (TouchDesigner)
+          <!-- Button for Artwork Mode -->
+          <button onclick="exportCoverArtwork()" id="btn-export-artwork" class="px-5 py-2.5 rounded-lg text-xs font-mono font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 hover:bg-cyan-500/30 transition-all flex items-center gap-2 shadow-lg hover:border-cyan-400">
+            📸 Export 1:1 Cover Artwork Master (3000x3000px JPG)
           </button>
-          <button onclick="triggerKickSnap()" class="px-3.5 py-2 rounded-lg text-xs font-mono text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-all flex items-center gap-1.5" title="Test 4-Beat Kick Snap / Ictus Deceleration">
+          
+          <!-- Button for Video Mode -->
+          <button onclick="renderVisualMaster()" id="btn-render-video" class="hidden px-5 py-2.5 rounded-lg text-xs font-mono font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all flex items-center gap-2 shadow-lg hover:border-emerald-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Render 60fps Content Video (TouchDesigner MP4)
+          </button>
+
+          <button onclick="triggerKickSnap()" id="btn-kick-snap" class="px-3.5 py-2 rounded-lg text-xs font-mono text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-all flex items-center gap-1.5" title="Test 4-Beat Kick Snap / Ictus Deceleration">
             ⚡ Trigger Kick Snap (Ictus)
           </button>
-          <span class="text-xs font-mono text-slate-400" id="render-status">Status: Engine Ready</span>
+          <span class="text-xs font-mono text-slate-400" id="render-status">Status: Cover Art Ready (3000x3000px Master)</span>
         </div>
       </div>
 
@@ -1469,35 +1517,87 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       }, 1500);
     }
 
-    // 5. VISUAL STUDIO & ASPECT RATIOS
-    function setAspect(mode) {
+    // 5. VISUAL STUDIO: DUAL OUTPUTS (1:1 COVER ARTWORK & 60FPS CONTENT VIDEOS)
+    let currentOutputMode = 'artwork'; // 'artwork' (1:1 static) or 'video' (9:16 / 16:9)
+    let currentVideoAspect = 'vertical'; // 'vertical' (9:16) or 'horizontal' (16:9)
+
+    function setOutputMode(mode) {
+      currentOutputMode = mode;
+      const btnArtwork = document.getElementById('btn-out-artwork');
+      const btnVideo = document.getElementById('btn-out-video');
+      const desc = document.getElementById('output-desc');
+      const videoBar = document.getElementById('video-aspect-bar');
+      const artworkBar = document.getElementById('artwork-info-bar');
+      const btnExportArt = document.getElementById('btn-export-artwork');
+      const btnRenderVid = document.getElementById('btn-render-video');
+      const hudEngine = document.getElementById('hud-engine-mode');
       const viewport = document.getElementById('visual-viewport');
       const safeZone = document.getElementById('safe-zone-overlay');
-      const btnSq = document.getElementById('btn-aspect-square');
-      const btnVert = document.getElementById('btn-aspect-vertical');
-      const btnHoriz = document.getElementById('btn-aspect-horizontal');
+      const viewportLabel = document.getElementById('viewport-label');
+      const status = document.getElementById('render-status');
 
-      [btnSq, btnVert, btnHoriz].forEach(b => {
-        b.className = "px-3 py-1 rounded text-slate-400 hover:text-white";
-      });
-
-      if (mode === 'square') {
+      if (mode === 'artwork') {
+        btnArtwork.className = "px-3.5 py-1.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-semibold flex items-center gap-1.5 border border-cyan-500/40 transition-all";
+        btnVideo.className = "px-3.5 py-1.5 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all";
+        desc.innerText = "Generating Output 1: Official 1:1 Static Cover Artwork (3000 x 3000px Master for DSPs)";
+        videoBar.classList.add('hidden');
+        artworkBar.classList.remove('hidden');
+        btnExportArt.classList.remove('hidden');
+        btnRenderVid.classList.add('hidden');
+        hudEngine.innerHTML = `<span class="h-2 w-2 rounded-full bg-cyan-400 pulse-glow"></span> TOUCHDESIGNER CORE [STATIC 1:1 CAPTURE]`;
+        viewportLabel.innerText = "APEX // 005 [STATIC 1:1 COVER ART]";
         viewport.style.width = '300px';
         viewport.style.height = '300px';
         safeZone.classList.add('hidden');
-        btnSq.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
-      } else if (mode === 'vertical') {
+        status.innerText = "Status: Cover Art Ready (3000x3000px Master)";
+      } else {
+        btnVideo.className = "px-3.5 py-1.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-xs font-semibold flex items-center gap-1.5 border border-emerald-500/40 transition-all";
+        btnArtwork.className = "px-3.5 py-1.5 rounded text-slate-400 hover:text-white font-mono text-xs font-semibold flex items-center gap-1.5 transition-all";
+        desc.innerText = "Generating Output 2: Promotional Content Videos (60fps Generative Motion Loops for Social & Video Channels)";
+        videoBar.classList.remove('hidden');
+        artworkBar.classList.add('hidden');
+        btnExportArt.classList.add('hidden');
+        btnRenderVid.classList.remove('hidden');
+        hudEngine.innerHTML = `<span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span> TOUCHDESIGNER 60FPS [DYNAMIC MOTION MODE]`;
+        viewportLabel.innerText = "APEX // 005 [60FPS CONTENT VIDEO]";
+        setVideoAspect(currentVideoAspect);
+        status.innerText = "Status: Generative Video Pipeline Ready";
+      }
+      drawVisualArtwork();
+    }
+
+    function setVideoAspect(mode) {
+      currentVideoAspect = mode;
+      const viewport = document.getElementById('visual-viewport');
+      const safeZone = document.getElementById('safe-zone-overlay');
+      const btnVert = document.getElementById('btn-aspect-vertical');
+      const btnHoriz = document.getElementById('btn-aspect-horizontal');
+
+      if (mode === 'vertical') {
         viewport.style.width = '202px';
         viewport.style.height = '360px'; // 9:16
         safeZone.classList.remove('hidden');
         btnVert.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
-      } else if (mode === 'horizontal') {
+        btnHoriz.className = "px-3 py-1 rounded text-slate-400 hover:text-white";
+      } else {
         viewport.style.width = '360px';
         viewport.style.height = '202px'; // 16:9
         safeZone.classList.add('hidden');
         btnHoriz.className = "px-3 py-1 rounded bg-cyan-500/20 text-cyan-300 font-semibold";
+        btnVert.className = "px-3 py-1 rounded text-slate-400 hover:text-white";
       }
       drawVisualArtwork();
+    }
+
+    function exportCoverArtwork() {
+      const status = document.getElementById('render-status');
+      status.innerText = "Status: Rendering 3000x3000px Master Cover Artwork...";
+      status.className = "text-xs font-mono text-cyan-300 animate-pulse";
+      setTimeout(() => {
+        status.innerText = "Status: 1:1 Cover Art Saved (JPEG / 300 DPI)";
+        status.className = "text-xs font-mono text-emerald-400 font-semibold";
+        alert("Downloaded APEX005_Cover_Master_3000x3000px.jpg (Validated for Beatport, Spotify, Apple Music & Vinyl Sleeves).");
+      }, 900);
     }
 
     function setVisualTrack(track) {
@@ -1640,19 +1740,21 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
 
     function renderVisualMaster() {
       const status = document.getElementById('render-status');
-      const btn = document.getElementById('btn-render-visual');
-      btn.disabled = true;
-      status.innerText = "Status: Spawning TouchDesigner Pipeline...";
+      const btn = document.getElementById('btn-render-video') || document.getElementById('btn-render-visual');
+      if (btn) btn.disabled = true;
+      const resText = currentVideoAspect === 'vertical' ? '9:16 (1080x1920 Reels/TikTok)' : '16:9 (1920x1080 DTV/YouTube)';
+      status.innerText = "Status: Spawning TouchDesigner 60fps Pipeline...";
       status.className = "text-xs font-mono text-amber-400 animate-pulse";
 
       setTimeout(() => {
-        status.innerText = "Status: Rendering 60fps MP4 Master...";
+        status.innerText = `Status: Rendering 60fps MP4 Master [${resText}]...`;
       }, 1000);
 
       setTimeout(() => {
-        status.innerText = "Status: Complete // Master Video Saved";
+        status.innerText = `Status: Complete // 60fps Content Video Saved (${resText})`;
         status.className = "text-xs font-mono text-emerald-400 font-semibold";
-        btn.disabled = false;
+        if (btn) btn.disabled = false;
+        alert(`Rendered & saved APEX005_Promo_${currentVideoAspect === 'vertical' ? '9x16_Reels' : '16x9_DTV'}.mp4 master video file.`);
       }, 2500);
     }
 
