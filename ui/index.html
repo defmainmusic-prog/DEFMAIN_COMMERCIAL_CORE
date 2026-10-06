@@ -214,7 +214,7 @@
               <span>ARTIST / PROJECT NAME *</span>
               <span class="text-[10px] text-amber-400 font-normal">Primary Creator</span>
             </label>
-            <input type="text" id="release-artist-input" value="Apex Node" oninput="updateReleaseMetadata()" placeholder="e.g. Apex Node" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+            <input type="text" id="release-artist-input" value="" oninput="updateReleaseMetadata()" placeholder="< Enter Artist >" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm placeholder:text-zinc-600 focus:outline-none focus:border-amber-400 transition-colors">
           </div>
 
           <!-- Release Title -->
@@ -223,7 +223,7 @@
               <span>RELEASE TITLE *</span>
               <span class="text-[10px] text-amber-400 font-normal">EP / Single Title</span>
             </label>
-            <input type="text" id="release-title-input" value="Tactical Selector" oninput="updateReleaseMetadata()" placeholder="e.g. Tactical Selector" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+            <input type="text" id="release-title-input" value="" oninput="updateReleaseMetadata()" placeholder="< Enter Release Title >" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm placeholder:text-zinc-600 focus:outline-none focus:border-amber-400 transition-colors">
           </div>
 
           <!-- Release Date -->
@@ -232,7 +232,7 @@
               <span>COMMERCIAL RELEASE DATE *</span>
               <span class="text-[10px] text-emerald-400 font-normal">Global Street Date</span>
             </label>
-            <input type="date" id="release-date-input" value="2026-10-15" onchange="updateReleaseMetadata()" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+            <input type="date" id="release-date-input" value="" onchange="updateReleaseMetadata()" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm placeholder:text-zinc-600 focus:outline-none focus:border-amber-400 transition-colors">
           </div>
         </div>
 
@@ -240,7 +240,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs pt-1 border-t border-specular-border/40">
           <div>
             <label class="text-slate-400 text-[10px] block mb-1">CATALOG NUMBER</label>
-            <input type="text" id="release-catalog-input" value="APEX005" oninput="updateReleaseMetadata()" placeholder="e.g. APEX005" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-amber-400 font-bold focus:outline-none focus:border-amber-400">
+            <input type="text" id="release-catalog-input" value="" oninput="updateReleaseMetadata()" placeholder="< Enter Catalog # >" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-amber-400 font-bold placeholder:text-zinc-600 focus:outline-none focus:border-amber-400">
           </div>
           <div>
             <label class="text-slate-400 text-[10px] block mb-1">RELEASE FORMAT</label>
@@ -253,17 +253,17 @@
           </div>
           <div>
             <label class="text-slate-400 text-[10px] block mb-1">ALBUM UPC / BARCODE</label>
-            <input type="text" id="release-upc-input" value="5059432018491" oninput="updateReleaseMetadata()" placeholder="13-Digit EAN/UPC" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-cyan-300 font-mono focus:outline-none focus:border-amber-400">
+            <input type="text" id="release-upc-input" value="" oninput="updateReleaseMetadata()" placeholder="< Enter UPC / Barcode >" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-cyan-300 font-mono placeholder:text-zinc-600 focus:outline-none focus:border-amber-400">
           </div>
         </div>
 
         <!-- Project Workspace Disk Status & Initialization Action -->
         <div class="pt-3 border-t border-specular-border/60 flex items-center justify-between flex-wrap gap-2 text-xs font-mono bg-obsidian-900/60 p-3 rounded-lg border border-specular-border/50">
           <div class="flex items-center gap-2.5 overflow-hidden">
-            <span id="disk-status-dot" class="h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
+            <span id="disk-status-dot" class="h-2 w-2 rounded-full bg-zinc-600 flex-shrink-0"></span>
             <div class="flex flex-col">
               <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">PROJECT WORKSPACE FOLDER (DISK BLUEPRINT):</span>
-              <span id="disk-status-path" class="text-slate-200 text-xs font-semibold truncate max-w-xl font-mono">operations/Releases/Apex Node - Tactical Selector - APEX005</span>
+              <span id="disk-status-path" class="text-zinc-600 text-xs italic truncate max-w-xl font-mono">&lt; Ready for input: Enter Artist, Release Title &amp; Catalog above &gt;</span>
             </div>
           </div>
           <button id="btn-deploy-release" onclick="triggerDeployRelease()" class="px-3.5 py-1.5 bg-amber-500 text-obsidian-950 font-bold hover:bg-amber-400 rounded-lg flex items-center gap-1.5 transition-all shadow-md text-xs whitespace-nowrap">
@@ -309,8 +309,8 @@
             </div>
           </div>
           <div class="text-right">
-            <span class="text-amber-400 font-semibold block" id="player-track-title">Tactical Selector (Original Club Mix)</span>
-            <span class="text-[10px] text-slate-400" id="player-track-spec">24-bit / 44.1kHz Master PCM</span>
+            <span class="text-amber-400 font-semibold block" id="player-track-title">&lt; Awaiting Master Ingestion &gt;</span>
+            <span class="text-[10px] text-slate-400" id="player-track-spec">24-bit PCM / Club Master Calibration</span>
           </div>
         </div>
         
@@ -1591,12 +1591,12 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
 
     // 4. AUDIO INGESTION, MULTI-TRACK RELEASE ARCHITECTURE & WAVEFORM CANVAS
     let releaseData = {
-      artist: "Apex Node",
-      title: "Tactical Selector",
-      date: "2026-10-15",
-      catalog: "APEX005",
+      artist: "",
+      title: "",
+      date: "",
+      catalog: "",
       format: "EP Bundle (3 Tracks)",
-      upc: "5059432018491",
+      upc: "",
       activeTrackIndex: 0,
       tracks: [
         {
@@ -1702,44 +1702,63 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       const formatEl = document.getElementById('release-format-input');
       const upcEl = document.getElementById('release-upc-input');
 
-      if (artistEl) releaseData.artist = artistEl.value.trim() || "Apex Node";
-      if (titleEl) releaseData.title = titleEl.value.trim() || "Tactical Selector";
-      if (dateEl) releaseData.date = dateEl.value || "2026-10-15";
-      if (catEl) releaseData.catalog = catEl.value.trim() || "APEX005";
+      if (artistEl) releaseData.artist = artistEl.value.trim();
+      if (titleEl) releaseData.title = titleEl.value.trim();
+      if (dateEl) releaseData.date = dateEl.value;
+      if (catEl) releaseData.catalog = catEl.value.trim();
       if (formatEl) releaseData.format = formatEl.value;
-      if (upcEl) releaseData.upc = upcEl.value.trim() || "5059432018491";
+      if (upcEl) releaseData.upc = upcEl.value.trim();
 
-      releaseData.tracks.forEach(t => {
-        t.title = releaseData.title;
+      releaseData.tracks.forEach((t, i) => {
+        t.title = releaseData.title ? releaseData.title : `Track 0${i + 1}`;
       });
 
       const vpLabel = document.getElementById('viewport-label');
       if (vpLabel) {
-        vpLabel.innerText = `${releaseData.catalog} // [STATIC 1:1 COVER ART]`;
+        vpLabel.innerText = `${releaseData.catalog || "T - 1"} // [STATIC 1:1 COVER ART]`;
       }
 
       const activeTrk = releaseData.tracks[releaseData.activeTrackIndex];
       if (activeTrk) {
-        document.getElementById('player-track-title').innerText = `${activeTrk.title} (${activeTrk.version})`;
+        document.getElementById('player-track-title').innerText = releaseData.title
+          ? `${activeTrk.title} (${activeTrk.version})`
+          : `< Awaiting Master Ingestion >`;
       }
 
       // Update disk target preview
       const pathEl = document.getElementById('disk-status-path');
+      const dot = document.getElementById('disk-status-dot');
       if (pathEl) {
-        pathEl.innerText = `operations/Releases/${releaseData.artist} - ${releaseData.title} - ${releaseData.catalog}`;
+        if (releaseData.artist && releaseData.title) {
+          pathEl.innerText = `operations/Releases/${releaseData.artist} - ${releaseData.title} - ${releaseData.catalog || 'TBC'}`;
+          pathEl.className = "text-slate-200 text-xs font-semibold truncate max-w-xl font-mono";
+        } else {
+          pathEl.innerText = `< Ready for input: Enter Artist, Release Title & Catalog above >`;
+          pathEl.className = "text-zinc-600 text-xs italic truncate max-w-xl font-mono";
+          if (dot) dot.className = "h-2 w-2 rounded-full bg-zinc-600 flex-shrink-0";
+        }
       }
 
       renderTracklist();
 
       // Debounce check against disk
-      clearTimeout(window._checkReleaseTimer);
-      window._checkReleaseTimer = setTimeout(checkReleaseStatus, 350);
+      if (releaseData.catalog) {
+        clearTimeout(window._checkReleaseTimer);
+        window._checkReleaseTimer = setTimeout(checkReleaseStatus, 350);
+      }
     }
 
     async function triggerDeployRelease() {
       const btn = document.getElementById('btn-deploy-release');
       const dot = document.getElementById('disk-status-dot');
       const pathEl = document.getElementById('disk-status-path');
+
+      if (!releaseData.artist || !releaseData.title) {
+        alert("Please enter both an Artist Name and a Release Title before initializing the project workspace on disk.");
+        const artistInput = document.getElementById('release-artist-input');
+        if (artistInput) artistInput.focus();
+        return;
+      }
 
       btn.disabled = true;
       btn.innerText = "Deploying Blueprint...";
@@ -1781,12 +1800,27 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
     }
 
     async function checkReleaseStatus() {
+      const dot = document.getElementById('disk-status-dot');
+      const pathEl = document.getElementById('disk-status-path');
+      const btn = document.getElementById('btn-deploy-release');
+
+      if (!releaseData.catalog) {
+        if (pathEl) {
+          pathEl.innerText = `< Ready for input: Enter Artist, Release Title & Catalog above >`;
+          pathEl.className = "text-zinc-600 text-xs italic truncate max-w-xl font-mono";
+        }
+        if (dot) dot.className = "h-2 w-2 rounded-full bg-zinc-600 flex-shrink-0";
+        if (btn) {
+          btn.innerHTML = "<span>⚡ Initialize Project Workspace</span>";
+          btn.className = "px-3.5 py-1.5 bg-amber-500 text-obsidian-950 font-bold hover:bg-amber-400 rounded-lg flex items-center gap-1.5 transition-all shadow-md text-xs whitespace-nowrap";
+          btn.disabled = false;
+        }
+        return;
+      }
+
       try {
         const res = await fetch(`/api/release/status?serial=${encodeURIComponent(releaseData.catalog)}`);
         const data = await res.json();
-        const dot = document.getElementById('disk-status-dot');
-        const pathEl = document.getElementById('disk-status-path');
-        const btn = document.getElementById('btn-deploy-release');
 
         if (data.exists) {
           releaseData.project_path = data.project_path;
@@ -1796,7 +1830,7 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
           btn.innerHTML = "<span>✓ Workspace Active</span>";
           btn.className = "px-3.5 py-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg flex items-center gap-1.5 font-mono text-xs font-semibold";
         } else {
-          pathEl.innerText = `Not yet initialized (Target: operations/Releases/${releaseData.artist} - ${releaseData.title} - ${releaseData.catalog})`;
+          pathEl.innerText = `Not yet initialized (Target: operations/Releases/${releaseData.artist || 'Artist'} - ${releaseData.title || 'Title'} - ${releaseData.catalog})`;
           pathEl.className = "text-slate-400 text-xs truncate max-w-xl font-mono";
           dot.className = "h-2 w-2 rounded-full bg-amber-400 flex-shrink-0";
           btn.innerHTML = "<span>⚡ Initialize Project Workspace</span>";
