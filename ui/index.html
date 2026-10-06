@@ -177,6 +177,9 @@
     <!-- ======================================================================= -->
     <!-- STAGE 1: AUDIO INGESTION, WAVEFORM & ACOUSTIC TELEMETRY -->
     <!-- ======================================================================= -->
+    <!-- ======================================================================= -->
+    <!-- STAGE 1: AUDIO INGESTION, WAVEFORM & ACOUSTIC TELEMETRY -->
+    <!-- ======================================================================= -->
     <section id="stage-1" class="flex flex-col gap-6">
       
       <!-- Stage Header -->
@@ -184,32 +187,103 @@
         <div>
           <span class="text-xs font-mono text-amber-400 font-semibold tracking-widest uppercase">Stage 01 // Ingestion</span>
           <h1 class="text-xl md:text-2xl font-bold text-slate-100 mt-1">Master Audio Ingestion & Acoustic Telemetry</h1>
-          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Drop the uncompressed engineering mixdown to compute real-time DSP harmonic analysis.</p>
+          <p class="text-xs md:text-sm text-slate-400 font-sans mt-1">Define the commercial release identity, ingest multi-track engineering masters, and calculate real-time DSP telemetry.</p>
         </div>
         <div class="hidden sm:flex flex-col items-end font-mono text-xs text-slate-400">
           <span class="text-emerald-400 font-semibold flex items-center gap-1.5">
             <span class="h-2 w-2 rounded-full bg-emerald-400 pulse-glow"></span> DSP Engine: 24-bit PCM
           </span>
-          <span class="text-[11px] text-slate-400">Calibrated for Club Audio</span>
+          <span class="text-[11px] text-slate-400">Multi-Track Master Architecture</span>
         </div>
       </div>
 
-      <!-- High-Impact Drag & Drop Zone -->
-      <div id="drop-zone" class="border-2 border-dashed border-specular-border hover:border-amber-500/60 transition-all rounded-xl p-8 bg-obsidian-850/60 flex flex-col items-center justify-center cursor-pointer text-center relative group min-h-[160px]">
-        <input type="file" id="audio-input" accept="audio/*" class="absolute inset-0 opacity-0 cursor-pointer">
-        <div class="h-12 w-12 rounded-full bg-obsidian-800 border border-specular-border flex items-center justify-center mb-3 group-hover:border-amber-400/50 transition-colors">
+      <!-- STEP 1: RELEASE DEFINITION & METADATA CARD -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-specular-border/60 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="h-5 w-5 rounded bg-amber-500/20 text-amber-400 font-mono text-xs font-bold flex items-center justify-center border border-amber-500/40">1</span>
+            <span class="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider">Release Identity & Commercial Dossier</span>
+          </div>
+          <span class="text-[11px] font-mono text-slate-400">Primary Catalog Parameters</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+          <!-- Artist Name -->
+          <div>
+            <label class="text-slate-400 text-[11px] block mb-1.5 flex items-center justify-between">
+              <span>ARTIST / PROJECT NAME *</span>
+              <span class="text-[10px] text-amber-400 font-normal">Primary Creator</span>
+            </label>
+            <input type="text" id="release-artist-input" value="Apex Node" oninput="updateReleaseMetadata()" placeholder="e.g. Apex Node" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+          </div>
+
+          <!-- Release Title -->
+          <div>
+            <label class="text-slate-400 text-[11px] block mb-1.5 flex items-center justify-between">
+              <span>RELEASE TITLE *</span>
+              <span class="text-[10px] text-amber-400 font-normal">EP / Single Title</span>
+            </label>
+            <input type="text" id="release-title-input" value="Tactical Selector" oninput="updateReleaseMetadata()" placeholder="e.g. Tactical Selector" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+          </div>
+
+          <!-- Release Date -->
+          <div>
+            <label class="text-slate-400 text-[11px] block mb-1.5 flex items-center justify-between">
+              <span>COMMERCIAL RELEASE DATE *</span>
+              <span class="text-[10px] text-emerald-400 font-normal">Global Street Date</span>
+            </label>
+            <input type="date" id="release-date-input" value="2026-10-15" onchange="updateReleaseMetadata()" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-2 text-slate-100 font-semibold text-sm focus:outline-none focus:border-amber-400 transition-colors">
+          </div>
+        </div>
+
+        <!-- Secondary Metadata Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs pt-1 border-t border-specular-border/40">
+          <div>
+            <label class="text-slate-400 text-[10px] block mb-1">CATALOG NUMBER</label>
+            <input type="text" id="release-catalog-input" value="APEX005" oninput="updateReleaseMetadata()" placeholder="e.g. APEX005" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-amber-400 font-bold focus:outline-none focus:border-amber-400">
+          </div>
+          <div>
+            <label class="text-slate-400 text-[10px] block mb-1">RELEASE FORMAT</label>
+            <select id="release-format-input" onchange="updateReleaseMetadata()" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none focus:border-amber-400">
+              <option value="EP Bundle (3 Tracks)">EP Bundle (3 Tracks)</option>
+              <option value="2-Track Club Single">2-Track Club Single</option>
+              <option value="Single Track Release">Single Track Release</option>
+              <option value="Full Length LP / Album">Full Length LP / Album (6+ Tracks)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-slate-400 text-[10px] block mb-1">ALBUM UPC / BARCODE</label>
+            <input type="text" id="release-upc-input" value="5059432018491" oninput="updateReleaseMetadata()" placeholder="13-Digit EAN/UPC" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-cyan-300 font-mono focus:outline-none focus:border-amber-400">
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: HIGH-IMPACT MULTI-TRACK DRAG & DROP ZONE -->
+      <div id="drop-zone" class="border-2 border-dashed border-specular-border hover:border-amber-500/60 transition-all rounded-xl p-7 bg-obsidian-850/60 flex flex-col items-center justify-center cursor-pointer text-center relative group min-h-[150px]">
+        <input type="file" id="audio-input" accept="audio/*" multiple class="absolute inset-0 opacity-0 cursor-pointer">
+        <div class="h-12 w-12 rounded-full bg-obsidian-800 border border-specular-border flex items-center justify-center mb-2.5 group-hover:border-amber-400/50 transition-colors">
           <svg class="w-6 h-6 text-slate-400 group-hover:text-amber-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
         </div>
-        <p class="text-base font-semibold text-slate-100"><span class="text-amber-400">Click to upload</span> or drag master audio file here</p>
-        <p class="text-xs text-slate-400 font-mono mt-1">Accepts uncompressed WAV, AIFF, or FLAC (24-bit / 44.1kHz or 96kHz)</p>
+        <p class="text-base font-semibold text-slate-100"><span class="text-amber-400">Click to upload</span> or drag master audio tracks here</p>
+        <p class="text-xs text-slate-400 font-mono mt-1">Multi-track support: Select multiple files at once • Accepts uncompressed WAV, AIFF, or FLAC (24-bit / 44.1kHz or 96kHz)</p>
         <div id="active-filename" class="mt-3 px-3 py-1 bg-obsidian-800 rounded font-mono text-xs text-emerald-400 border border-emerald-500/30 hidden">
-          Loaded: <span id="file-name-text">track.wav</span>
+          Loaded: <span id="file-name-text">3 Master Audio Files Ingested</span>
         </div>
       </div>
 
-      <!-- In-Browser Interactive Waveform Player -->
+      <!-- In-Browser Interactive Waveform Player with Active Track Switcher Tabs -->
       <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-3">
-        <div class="flex items-center justify-between text-xs font-mono">
+        <!-- Track Selector Tabs for Player -->
+        <div class="flex items-center justify-between border-b border-specular-border/60 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-2" id="player-track-tabs">
+            <!-- Dynamically populated buttons for each track in releaseData -->
+          </div>
+          <button onclick="promptAddTrack()" class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border hover:border-amber-400 text-slate-300 hover:text-amber-300 font-mono text-[11px] flex items-center gap-1 transition-all">
+            + Add Track
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between text-xs font-mono pt-1">
           <div class="flex items-center gap-3">
             <button id="btn-play" onclick="togglePlay()" class="h-9 w-9 rounded-full bg-emerald-500 text-obsidian-950 flex items-center justify-center font-bold hover:bg-emerald-400 transition-colors shadow-lg">
               ▶
@@ -220,14 +294,17 @@
               <span id="total-time">06:24</span>
             </div>
           </div>
-          <span class="text-amber-400 font-semibold" id="player-track-title">Apex_Selector_Master_24bit.wav</span>
+          <div class="text-right">
+            <span class="text-amber-400 font-semibold block" id="player-track-title">Tactical Selector (Original Club Mix)</span>
+            <span class="text-[10px] text-slate-400" id="player-track-spec">24-bit / 44.1kHz Master PCM</span>
+          </div>
         </div>
         
         <!-- Waveform Canvas -->
         <canvas id="waveform-canvas" class="w-full h-16 bg-obsidian-950 rounded-lg border border-specular-border cursor-pointer"></canvas>
       </div>
 
-      <!-- Diagnostic & Cloud Mastering Bridge (2 Columns with Room to Breathe) -->
+      <!-- Diagnostic & Cloud Mastering Bridge -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs">
         
         <!-- Headroom Diagnostic -->
@@ -255,7 +332,10 @@
               <option value="punch">Peak-Hour Punch / High Density</option>
             </select>
             <button onclick="triggerMasteringSim()" id="btn-master" class="px-3 py-1.5 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500/30 transition-all font-semibold whitespace-nowrap">
-              ⚡ Master
+              ⚡ Master Active Track
+            </button>
+            <button onclick="batchMasterAll()" id="btn-batch-master" class="px-3 py-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg hover:bg-emerald-500/30 transition-all font-semibold whitespace-nowrap">
+              ⚡ Master All
             </button>
           </div>
         </div>
@@ -297,9 +377,51 @@
         </div>
       </div>
 
-      <!-- Phase 1 Footer Action Bar -->
+      <!-- STEP 3: RELEASE TRACKLIST & MASTERING MANIFEST (BOTTOM OF STAGE 1) -->
+      <div class="bg-obsidian-850 rounded-xl p-5 specular-border flex flex-col gap-4">
+        <div class="flex items-center justify-between border-b border-specular-border/60 pb-3 flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="h-5 w-5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold flex items-center justify-center border border-emerald-500/40">3</span>
+            <div>
+              <h2 class="text-xs font-mono font-bold text-slate-100 uppercase tracking-wider">Release Tracklist & Mastering Manifest</h2>
+              <p class="text-[11px] text-slate-400 font-sans">Multi-track release sequence, acoustic verification status, and assigned ISRC inventory.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded bg-obsidian-900 border border-specular-border text-amber-400 font-mono text-xs" id="tracklist-count-badge">
+              3 Tracks Ingested
+            </span>
+            <button onclick="promptAddTrack()" class="px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/40 rounded-lg hover:bg-amber-500/30 transition-all font-mono text-xs font-semibold">
+              + Add Track
+            </button>
+          </div>
+        </div>
+
+        <!-- Tracklist Table -->
+        <div class="overflow-x-auto rounded-lg border border-specular-border bg-obsidian-900">
+          <table class="w-full text-left border-collapse font-mono text-xs">
+            <thead>
+              <tr class="border-b border-specular-border text-[10px] text-slate-400 uppercase bg-obsidian-950">
+                <th class="p-2.5">#</th>
+                <th class="p-2.5">Track Title & Mix Version</th>
+                <th class="p-2.5">Duration</th>
+                <th class="p-2.5">Audio Format</th>
+                <th class="p-2.5">Tempo / Key</th>
+                <th class="p-2.5">True Peak</th>
+                <th class="p-2.5 text-cyan-300">Assigned ISRC</th>
+                <th class="p-2.5 text-right">Master Status / Action</th>
+              </tr>
+            </thead>
+            <tbody id="tracklist-body" class="divide-y divide-specular-border/50 text-[11px]">
+              <!-- Dynamically populated by renderTracklist() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Stage 1 Footer Action Bar -->
       <div class="border-t border-specular-border pt-5 flex items-center justify-between">
-        <span class="text-xs font-mono text-slate-400">Audio Telemetry Verified ✓</span>
+        <span class="text-xs font-mono text-slate-400">Release Dossier & Master Audio Telemetry Verified ✓</span>
         <button onclick="goToStep(2)" class="px-6 py-2.5 bg-amber-500 text-obsidian-950 font-mono font-bold text-xs rounded-lg hover:bg-amber-400 transition-colors flex items-center gap-2 shadow-lg">
           Continue to Phase 2: Visual Studio →
         </button>
@@ -1453,7 +1575,67 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       }, 1200);
     }
 
-    // 4. AUDIO INGESTION & WAVEFORM CANVAS
+    // 4. AUDIO INGESTION, MULTI-TRACK RELEASE ARCHITECTURE & WAVEFORM CANVAS
+    let releaseData = {
+      artist: "Apex Node",
+      title: "Tactical Selector",
+      date: "2026-10-15",
+      catalog: "APEX005",
+      format: "EP Bundle (3 Tracks)",
+      upc: "5059432018491",
+      activeTrackIndex: 0,
+      tracks: [
+        {
+          id: 1,
+          title: "Tactical Selector",
+          version: "Original Club Mix",
+          duration: "06:24",
+          durationSec: 384,
+          bpm: 138.0,
+          key: "F# Minor",
+          subHz: 46.2,
+          crestDb: 5.8,
+          subMass: "54.2%",
+          spec: "24-bit / 44.1kHz WAV",
+          peak: "-0.2 dBFS",
+          isrc: "US-T01-26-00014",
+          mastered: true
+        },
+        {
+          id: 2,
+          title: "Tactical Selector",
+          version: "Dub Accelerator Mix",
+          duration: "05:48",
+          durationSec: 348,
+          bpm: 138.0,
+          key: "F# Minor",
+          subHz: 46.2,
+          crestDb: 6.1,
+          subMass: "56.0%",
+          spec: "24-bit / 44.1kHz WAV",
+          peak: "-0.2 dBFS",
+          isrc: "US-T01-26-00015",
+          mastered: true
+        },
+        {
+          id: 3,
+          title: "Tactical Selector",
+          version: "Radio & Streaming Edit",
+          duration: "03:45",
+          durationSec: 225,
+          bpm: 138.0,
+          key: "F# Minor",
+          subHz: 46.2,
+          crestDb: 5.4,
+          subMass: "51.8%",
+          spec: "24-bit / 44.1kHz WAV",
+          peak: "-0.2 dBFS",
+          isrc: "US-T01-26-00016",
+          mastered: true
+        }
+      ]
+    };
+
     const waveCanvas = document.getElementById('waveform-canvas');
     const waveCtx = waveCanvas.getContext('2d');
     let isPlaying = false;
@@ -1465,10 +1647,13 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       if (w === 0 || h === 0) return;
       waveCtx.clearRect(0, 0, w, h);
 
+      const track = releaseData.tracks[releaseData.activeTrackIndex] || releaseData.tracks[0];
       const bars = 90;
       const barWidth = w / bars;
       for (let i = 0; i < bars; i++) {
-        const barHeight = Math.sin(i * 0.15) * 0.35 + Math.cos(i * 0.3) * 0.25 + 0.35;
+        // Subtle variance based on track ID
+        const harmonic = track.id * 0.05;
+        const barHeight = Math.sin(i * (0.15 + harmonic)) * 0.35 + Math.cos(i * 0.3) * 0.25 + 0.35;
         const actualH = barHeight * (h * 0.8);
         const x = i * barWidth;
         const y = (h - actualH) / 2;
@@ -1495,27 +1680,245 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       document.getElementById('btn-play').innerText = isPlaying ? '❚❚' : '▶';
     }
 
-    const dropZone = document.getElementById('drop-zone');
-    const audioInput = document.getElementById('audio-input');
+    function updateReleaseMetadata() {
+      const artistEl = document.getElementById('release-artist-input');
+      const titleEl = document.getElementById('release-title-input');
+      const dateEl = document.getElementById('release-date-input');
+      const catEl = document.getElementById('release-catalog-input');
+      const formatEl = document.getElementById('release-format-input');
+      const upcEl = document.getElementById('release-upc-input');
 
-    audioInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        const file = e.target.files[0];
-        document.getElementById('file-name-text').innerText = file.name;
-        document.getElementById('active-filename').classList.remove('hidden');
-        document.getElementById('player-track-title').innerText = file.name;
+      if (artistEl) releaseData.artist = artistEl.value.trim() || "Apex Node";
+      if (titleEl) releaseData.title = titleEl.value.trim() || "Tactical Selector";
+      if (dateEl) releaseData.date = dateEl.value || "2026-10-15";
+      if (catEl) releaseData.catalog = catEl.value.trim() || "APEX005";
+      if (formatEl) releaseData.format = formatEl.value;
+      if (upcEl) releaseData.upc = upcEl.value.trim() || "5059432018491";
+
+      releaseData.tracks.forEach(t => {
+        t.title = releaseData.title;
+      });
+
+      const vpLabel = document.getElementById('viewport-label');
+      if (vpLabel) {
+        vpLabel.innerText = `${releaseData.catalog} // [STATIC 1:1 COVER ART]`;
       }
-    });
+
+      const activeTrk = releaseData.tracks[releaseData.activeTrackIndex];
+      if (activeTrk) {
+        document.getElementById('player-track-title').innerText = `${activeTrk.title} (${activeTrk.version})`;
+      }
+
+      renderTracklist();
+    }
+
+    function renderTracklist() {
+      const tbody = document.getElementById('tracklist-body');
+      const tabs = document.getElementById('player-track-tabs');
+      const badge = document.getElementById('tracklist-count-badge');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+      if (tabs) tabs.innerHTML = '';
+      if (badge) badge.innerText = `${releaseData.tracks.length} Tracks Ingested`;
+
+      releaseData.tracks.forEach((track, index) => {
+        const isActive = index === releaseData.activeTrackIndex;
+
+        // Player tab button
+        if (tabs) {
+          const tabBtn = document.createElement('button');
+          tabBtn.onclick = () => selectTrack(index);
+          tabBtn.className = isActive
+            ? "px-3 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-mono text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
+            : "px-3 py-1 rounded bg-obsidian-900 text-slate-400 hover:text-white border border-specular-border font-mono text-xs transition-all";
+          tabBtn.innerHTML = `<span>#0${track.id}</span> <span>${track.version}</span>`;
+          tabs.appendChild(tabBtn);
+        }
+
+        // Table row
+        const tr = document.createElement('tr');
+        tr.className = isActive
+          ? "bg-obsidian-850/80 border-l-2 border-l-amber-400 transition-colors"
+          : "hover:bg-obsidian-850/50 transition-colors cursor-pointer";
+        
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold ${isActive ? 'text-amber-400' : 'text-slate-400'}">0${track.id}</td>
+          <td class="p-2.5">
+            <span class="text-slate-100 font-semibold block">${track.title}</span>
+            <span class="text-[10px] text-slate-400 font-sans">${track.version}</span>
+          </td>
+          <td class="p-2.5 text-slate-300">${track.duration}</td>
+          <td class="p-2.5">
+            <span class="text-emerald-400 font-medium">${track.spec}</span>
+          </td>
+          <td class="p-2.5 text-slate-300">${track.bpm} BPM / ${track.key}</td>
+          <td class="p-2.5">
+            <span class="${track.mastered ? 'text-emerald-400 font-bold' : 'text-amber-300'}">${track.peak}</span>
+          </td>
+          <td class="p-2.5">
+            <div class="inline-flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 rounded text-[10px]">
+              <span class="font-bold text-cyan-300 font-mono tracking-wider select-all">${track.isrc}</span>
+              <button onclick="event.stopPropagation(); navigator.clipboard.writeText('${track.isrc}'); alert('Copied ISRC ${track.isrc} to clipboard!')" class="text-cyan-400 hover:text-white transition-colors" title="Copy ISRC">📋</button>
+            </div>
+          </td>
+          <td class="p-2.5 text-right">
+            <div class="inline-flex items-center gap-2">
+              ${track.mastered 
+                ? '<span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] font-semibold">MASTERED ✓</span>' 
+                : '<button onclick="event.stopPropagation(); masterSpecificTrack(' + index + ')" class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[9px] font-semibold hover:bg-amber-500/30">Master</button>'}
+              <button onclick="event.stopPropagation(); selectTrack(${index})" class="px-2 py-0.5 rounded bg-obsidian-800 text-slate-300 hover:text-white border border-specular-border text-[9px]">
+                ${isActive ? 'Active ▶' : 'Select'}
+              </button>
+            </div>
+          </td>
+        `;
+        tr.onclick = () => selectTrack(index);
+        tbody.appendChild(tr);
+      });
+    }
+
+    function selectTrack(index) {
+      if (index < 0 || index >= releaseData.tracks.length) return;
+      releaseData.activeTrackIndex = index;
+      const track = releaseData.tracks[index];
+
+      // Update player display
+      document.getElementById('player-track-title').innerText = `${track.title} (${track.version})`;
+      document.getElementById('player-track-spec').innerText = track.spec;
+      document.getElementById('total-time').innerText = track.duration;
+
+      // Update telemetry
+      document.getElementById('tel-bpm').innerText = track.bpm.toFixed(1);
+      document.getElementById('tel-key').innerText = track.key;
+      document.getElementById('tel-sub').innerHTML = `${track.subHz} Hz <span class="text-xs font-normal text-slate-400">[f0]</span>`;
+      document.getElementById('tel-crest').innerText = `${track.crestDb} dB`;
+      document.getElementById('tel-mass').innerText = track.subMass;
+
+      // Update headroom status
+      if (track.mastered) {
+        document.getElementById('headroom-status').innerText = `OPTIMAL (${track.peak} Mastered)`;
+        document.getElementById('headroom-bar').style.width = "95%";
+      } else {
+        document.getElementById('headroom-status').innerText = "PRE-MASTER (-5.8 dBFS)";
+        document.getElementById('headroom-bar').style.width = "70%";
+      }
+
+      waveProgress = 0.20;
+      drawWaveform();
+      renderTracklist();
+    }
+
+    function promptAddTrack() {
+      const nextId = releaseData.tracks.length + 1;
+      const mixVersions = ["Extended Instrumental Mix", "VIP Remix", "Acapella & Tool", "Stripped Dub Cut", "Club Version"];
+      const chosenVer = mixVersions[(nextId - 4) % mixVersions.length] || `Mix Version 0${nextId}`;
+      const isrcNum = (14 + nextId - 1).toString().padStart(5, '0');
+      
+      const newTrack = {
+        id: nextId,
+        title: releaseData.title,
+        version: chosenVer,
+        duration: "05:15",
+        durationSec: 315,
+        bpm: 138.0,
+        key: "F# Minor",
+        subHz: 46.2,
+        crestDb: 5.9,
+        subMass: "53.5%",
+        spec: "24-bit / 44.1kHz WAV",
+        peak: "-0.2 dBFS",
+        isrc: `US-T01-26-${isrcNum}`,
+        mastered: true
+      };
+
+      releaseData.tracks.push(newTrack);
+      selectTrack(releaseData.tracks.length - 1);
+    }
+
+    function masterSpecificTrack(index) {
+      if (releaseData.tracks[index]) {
+        releaseData.tracks[index].mastered = true;
+        releaseData.tracks[index].peak = "-0.2 dBFS";
+        renderTracklist();
+      }
+    }
 
     function triggerMasteringSim() {
       const btn = document.getElementById('btn-master');
       btn.innerText = "Mastering...";
       setTimeout(() => {
         btn.innerText = "Mastered ✓";
+        const cur = releaseData.tracks[releaseData.activeTrackIndex];
+        if (cur) {
+          cur.mastered = true;
+          cur.peak = "-0.2 dBFS";
+        }
         document.getElementById('headroom-status').innerText = "OPTIMAL (-0.2 dBFS Mastered)";
         document.getElementById('headroom-bar').style.width = "95%";
-      }, 1500);
+        renderTracklist();
+      }, 1200);
     }
+
+    function batchMasterAll() {
+      const btn = document.getElementById('btn-batch-master');
+      if (btn) btn.innerText = "Mastering All...";
+      setTimeout(() => {
+        releaseData.tracks.forEach(t => {
+          t.mastered = true;
+          t.peak = "-0.2 dBFS";
+        });
+        if (btn) btn.innerText = "All Mastered ✓";
+        document.getElementById('headroom-status').innerText = "OPTIMAL (-0.2 dBFS Mastered)";
+        document.getElementById('headroom-bar').style.width = "95%";
+        renderTracklist();
+      }, 1200);
+    }
+
+    const dropZone = document.getElementById('drop-zone');
+    const audioInput = document.getElementById('audio-input');
+
+    audioInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        const files = Array.from(e.target.files);
+        const nameText = files.length === 1 
+          ? files[0].name 
+          : `${files.length} Master Audio Tracks Ingested (${files.map(f => f.name).slice(0, 2).join(', ')}${files.length > 2 ? '...' : ''})`;
+        
+        document.getElementById('file-name-text').innerText = nameText;
+        document.getElementById('active-filename').classList.remove('hidden');
+
+        files.forEach((file, idx) => {
+          if (releaseData.tracks[idx]) {
+            releaseData.tracks[idx].version = file.name.replace(/\.[^/.]+$/, "");
+          } else {
+            const nextId = releaseData.tracks.length + 1;
+            const isrcNum = (14 + nextId - 1).toString().padStart(5, '0');
+            releaseData.tracks.push({
+              id: nextId,
+              title: releaseData.title,
+              version: file.name.replace(/\.[^/.]+$/, ""),
+              duration: "05:30",
+              durationSec: 330,
+              bpm: 138.0,
+              key: "F# Minor",
+              subHz: 46.2,
+              crestDb: 5.8,
+              subMass: "54.0%",
+              spec: "24-bit / 44.1kHz WAV",
+              peak: "-0.2 dBFS",
+              isrc: `US-T01-26-${isrcNum}`,
+              mastered: true
+            });
+          }
+        });
+
+        selectTrack(0);
+      }
+    });
+
+    // Initialize tracklist immediately
+    renderTracklist();
 
     // 5. VISUAL STUDIO: DUAL OUTPUTS (1:1 COVER ARTWORK & 60FPS CONTENT VIDEOS)
     let currentOutputMode = 'artwork'; // 'artwork' (1:1 static) or 'video' (9:16 / 16:9)
@@ -1813,62 +2216,35 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
     function downloadManifestJSON() {
       const manifest = {
         schema: "DDEX-ERN-4.3-T1-CORE",
-        release_id: "US-T01-26-R0005",
-        catalog_number: "APEX005",
-        upc: "5059432018491",
-        ean_13: "5059432018491",
+        release_id: `US-T01-26-${releaseData.catalog}`,
+        catalog_number: releaseData.catalog,
+        upc: releaseData.upc,
+        ean_13: releaseData.upc,
         barcode_standard: "GS1-128 / EAN-13 Validated",
-        release_title: "Tactical Selector",
-        display_artist: "Apex Node",
-        release_type: "EP / Single Bundle",
+        release_title: releaseData.title,
+        display_artist: releaseData.artist,
+        release_type: releaseData.format,
         genre: "Peak-Time / Driving Techno",
-        release_date: "2026-10-15",
-        c_line: "(C) 2026 T-1 Commercial Recordings",
-        p_line: "(P) 2026 T-1 Commercial Recordings",
-        distributor_target: "Ampsuite Enterprise Gateway (34 DSPs)",
+        release_date: releaseData.date,
+        c_line: `(C) 2026 T-1 Commercial Recordings`,
+        p_line: `(P) 2026 T-1 Commercial Recordings`,
+        distributor_target: (distributorProfiles[activeDistributor] || distributorProfiles.ampsuite).name + " (34 DSPs)",
         territory_coverage: "Worldwide (WW)",
-        tracks_count: 3,
-        tracks: [
-          {
-            track_number: 1,
-            title: "Tactical Selector",
-            mix_version: "Original Club Mix",
-            isrc: "US-T01-26-00014",
-            duration: "06:24",
-            tempo_bpm: 138,
-            musical_key: "F# Minor",
-            audio_spec: "24-bit / 44.1kHz WAV Master",
-            peak_headroom_dbfs: -0.2,
-            monolith_crest_db: 5.8,
-            explicit: false
-          },
-          {
-            track_number: 2,
-            title: "Tactical Selector",
-            mix_version: "Dub Accelerator Mix",
-            isrc: "US-T01-26-00015",
-            duration: "05:48",
-            tempo_bpm: 138,
-            musical_key: "F# Minor",
-            audio_spec: "24-bit / 44.1kHz WAV Master",
-            peak_headroom_dbfs: -0.2,
-            monolith_crest_db: 6.1,
-            explicit: false
-          },
-          {
-            track_number: 3,
-            title: "Tactical Selector",
-            mix_version: "Radio & Streaming Edit",
-            isrc: "US-T01-26-00016",
-            duration: "03:45",
-            tempo_bpm: 138,
-            musical_key: "F# Minor",
-            audio_spec: "24-bit / 44.1kHz WAV Master",
-            peak_headroom_dbfs: -0.2,
-            monolith_crest_db: 5.4,
-            explicit: false
-          }
-        ],
+        tracks_count: releaseData.tracks.length,
+        tracks: releaseData.tracks.map((t, idx) => ({
+          track_number: idx + 1,
+          title: t.title,
+          mix_version: t.version,
+          isrc: t.isrc,
+          duration: t.duration,
+          tempo_bpm: t.bpm,
+          musical_key: t.key,
+          audio_spec: t.spec,
+          peak_headroom_dbfs: t.peak,
+          monolith_crest_db: t.crestDb,
+          mastered: t.mastered,
+          explicit: false
+        })),
         visual_deliverables: {
           motion_loop_60fps: "1:1, 9:16, 16:9 DTV (Conductor's Baton Lissajous Flow)",
           static_covers: "3000x3000px 300DPI RGB Master"
@@ -1876,9 +2252,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
         social_marketing_campaign: {
           platform: "Metricool Automated Campaign Queue",
           touchpoints_count: 10,
-          csv_export: "metricool_campaign_schedule_APEX005.csv"
+          csv_export: `metricool_campaign_schedule_${releaseData.catalog}.csv`
         },
-        dj_promo_vault: "https://vault.labelnetwork.com/apex005-promo",
+        dj_promo_vault: `https://vault.labelnetwork.com/${releaseData.catalog.toLowerCase()}-promo`,
         manifest_generated_at: new Date().toISOString()
       };
 
@@ -1887,7 +2263,7 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS`;
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.setAttribute("href", url);
-      link.setAttribute("download", "release_manifest_APEX005_UPC_ISRC.json");
+      link.setAttribute("download", `release_manifest_${releaseData.catalog}_UPC_ISRC.json`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
