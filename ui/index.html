@@ -256,6 +256,20 @@
             <input type="text" id="release-upc-input" value="5059432018491" oninput="updateReleaseMetadata()" placeholder="13-Digit EAN/UPC" class="w-full bg-obsidian-900 border border-specular-border rounded-lg px-3 py-1.5 text-cyan-300 font-mono focus:outline-none focus:border-amber-400">
           </div>
         </div>
+
+        <!-- Project Workspace Disk Status & Initialization Action -->
+        <div class="pt-3 border-t border-specular-border/60 flex items-center justify-between flex-wrap gap-2 text-xs font-mono bg-obsidian-900/60 p-3 rounded-lg border border-specular-border/50">
+          <div class="flex items-center gap-2.5 overflow-hidden">
+            <span id="disk-status-dot" class="h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0"></span>
+            <div class="flex flex-col">
+              <span class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">PROJECT WORKSPACE FOLDER (DISK BLUEPRINT):</span>
+              <span id="disk-status-path" class="text-slate-200 text-xs font-semibold truncate max-w-xl font-mono">operations/Releases/Apex Node - Tactical Selector - APEX005</span>
+            </div>
+          </div>
+          <button id="btn-deploy-release" onclick="triggerDeployRelease()" class="px-3.5 py-1.5 bg-amber-500 text-obsidian-950 font-bold hover:bg-amber-400 rounded-lg flex items-center gap-1.5 transition-all shadow-md text-xs whitespace-nowrap">
+            <span>⚡ Initialize Project Workspace</span>
+          </button>
+        </div>
       </div>
 
       <!-- STEP 2: HIGH-IMPACT MULTI-TRACK DRAG & DROP ZONE -->
@@ -1709,7 +1723,89 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
         document.getElementById('player-track-title').innerText = `${activeTrk.title} (${activeTrk.version})`;
       }
 
+      // Update disk target preview
+      const pathEl = document.getElementById('disk-status-path');
+      if (pathEl) {
+        pathEl.innerText = `operations/Releases/${releaseData.artist} - ${releaseData.title} - ${releaseData.catalog}`;
+      }
+
       renderTracklist();
+
+      // Debounce check against disk
+      clearTimeout(window._checkReleaseTimer);
+      window._checkReleaseTimer = setTimeout(checkReleaseStatus, 350);
+    }
+
+    async function triggerDeployRelease() {
+      const btn = document.getElementById('btn-deploy-release');
+      const dot = document.getElementById('disk-status-dot');
+      const pathEl = document.getElementById('disk-status-path');
+
+      btn.disabled = true;
+      btn.innerText = "Deploying Blueprint...";
+
+      try {
+        const res = await fetch('/api/release/init', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            artist: releaseData.artist,
+            title: releaseData.title,
+            catalog: releaseData.catalog,
+            date: releaseData.date,
+            format: releaseData.format,
+            upc: releaseData.upc,
+            tracks: releaseData.tracks
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          releaseData.project_path = data.project_path;
+          pathEl.innerText = data.project_path;
+          pathEl.className = "text-emerald-400 text-xs font-semibold truncate max-w-xl font-mono";
+          dot.className = "h-2 w-2 rounded-full bg-emerald-400 pulse-glow flex-shrink-0";
+          btn.innerHTML = "<span>✓ Workspace Initialized</span>";
+          btn.className = "px-3.5 py-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg flex items-center gap-1.5 font-mono text-xs font-semibold";
+          alert(`Release project structure successfully initialized at:\n${data.project_path}\n\nSubfolders ready: 00_Original_Files, 01_Masters, 02_Artwork, 03_Social, 04_DTV, 05_Legal, EPK`);
+        } else {
+          alert("Error deploying release workspace: " + (data.error || "Unknown error"));
+          btn.disabled = false;
+          btn.innerText = "⚡ Initialize Project Workspace";
+        }
+      } catch (err) {
+        console.error("Deploy release error:", err);
+        btn.disabled = false;
+        btn.innerText = "⚡ Initialize Project Workspace";
+      }
+    }
+
+    async function checkReleaseStatus() {
+      try {
+        const res = await fetch(`/api/release/status?serial=${encodeURIComponent(releaseData.catalog)}`);
+        const data = await res.json();
+        const dot = document.getElementById('disk-status-dot');
+        const pathEl = document.getElementById('disk-status-path');
+        const btn = document.getElementById('btn-deploy-release');
+
+        if (data.exists) {
+          releaseData.project_path = data.project_path;
+          pathEl.innerText = data.project_path;
+          pathEl.className = "text-emerald-400 text-xs font-semibold truncate max-w-xl font-mono";
+          dot.className = "h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0";
+          btn.innerHTML = "<span>✓ Workspace Active</span>";
+          btn.className = "px-3.5 py-1.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-lg flex items-center gap-1.5 font-mono text-xs font-semibold";
+        } else {
+          pathEl.innerText = `Not yet initialized (Target: operations/Releases/${releaseData.artist} - ${releaseData.title} - ${releaseData.catalog})`;
+          pathEl.className = "text-slate-400 text-xs truncate max-w-xl font-mono";
+          dot.className = "h-2 w-2 rounded-full bg-amber-400 flex-shrink-0";
+          btn.innerHTML = "<span>⚡ Initialize Project Workspace</span>";
+          btn.className = "px-3.5 py-1.5 bg-amber-500 text-obsidian-950 font-bold hover:bg-amber-400 rounded-lg flex items-center gap-1.5 transition-all shadow-md text-xs whitespace-nowrap";
+          btn.disabled = false;
+        }
+      } catch (err) {
+        console.warn("Could not check release status:", err);
+      }
     }
 
     function renderTracklist() {
@@ -1917,8 +2013,9 @@ TEMPO: 138.0 BPM | KEY: F# Minor | SUB_60HZ: 54.2% MASS
       }
     });
 
-    // Initialize tracklist immediately
+    // Initialize tracklist & check disk workspace status immediately
     renderTracklist();
+    checkReleaseStatus();
 
     // 5. VISUAL STUDIO: DUAL OUTPUTS (1:1 COVER ARTWORK & 60FPS CONTENT VIDEOS)
     let currentOutputMode = 'artwork'; // 'artwork' (1:1 static) or 'video' (9:16 / 16:9)

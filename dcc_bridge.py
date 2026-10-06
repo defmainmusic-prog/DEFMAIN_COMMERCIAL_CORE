@@ -23,6 +23,19 @@ BASE_DIR = Path(__file__).resolve().parent
 UI_DIR = BASE_DIR / "ui"
 PLAYGROUND_DIR = BASE_DIR / "visuals_playground"
 TEST_TRACKS_DIR = PLAYGROUND_DIR / "test_tracks"
+AUTOMATION_DIR = BASE_DIR / "automation_engine"
+
+# Inject automation engine to path
+if str(AUTOMATION_DIR) not in sys.path:
+    sys.path.insert(0, str(AUTOMATION_DIR))
+
+try:
+    from release_setup import deploy_release
+    from config import resolve_release_path
+except ImportError as err:
+    print(f"[WARN] Could not import release_setup / config: {err}")
+    deploy_release = None
+    resolve_release_path = None
 
 PORT = 8080
 
@@ -69,6 +82,41 @@ class DCCRequestHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json_response({"tracks": tracks})
             return
 
+        # Route: Query Release Status & Checkpoint on Disk
+        if parsed.path == "/api/release/status":
+            params = parse_qs(parsed.query)
+            serial = params.get("serial", ["APEX005"])[0].upper().strip()
+            
+            project_path = resolve_release_path(serial) if resolve_release_path else None
+            if project_path and project_path.exists():
+                manifest_file = project_path / "release_manifest.json"
+                manifest_data = {}
+                if manifest_file.exists():
+                    try:
+                        with open(manifest_file, "r") as f:
+                            manifest_data = json.load(f)
+                    except Exception:
+                        pass
+                
+                # List master files if any
+                masters_dir = project_path / "01_Masters"
+                master_files = [f.name for f in masters_dir.glob("*") if f.is_file() and not f.name.startswith(".")] if masters_dir.exists() else []
+
+                self.send_json_response({
+                    "exists": True,
+                    "serial": serial,
+                    "project_path": str(project_path),
+                    "manifest": manifest_data,
+                    "master_files": master_files
+                })
+            else:
+                self.send_json_response({
+                    "exists": False,
+                    "serial": serial,
+                    "message": f"Release workspace for {serial} not yet initialized on disk."
+                })
+            return
+
         # Default: Serve UI files
         if parsed.path == "/" or parsed.path == "":
             self.path = "/index.html"
@@ -84,6 +132,54 @@ class DCCRequestHandler(http.server.SimpleHTTPRequestHandler):
             payload = json.loads(post_body)
         except Exception:
             payload = {}
+
+        # Route: Initialize Release Project Workspace on Disk
+        if parsed.path == "/api/release/init":
+            artist = payload.get("artist", "Apex Node")
+            title = payload.get("title", "Tactical Selector")
+            serial = payload.get("catalog", payload.get("serial", "APEX005"))
+            rel_date = payload.get("date", payload.get("release_date", "2026-10-15"))
+            format_type = payload.get("format", "EP Bundle (3 Tracks)")
+            upc = payload.get("upc", "5059432018491")
+            tracks = payload.get("tracks", [])
+
+            if deploy_release is None:
+                self.send_json_response({
+                    "success": False,
+                    "error": "deploy_release module is not loaded."
+                }, status=500)
+                return
+
+            try:
+                serial_out, dest_path = deploy_release(
+                    artist=artist,
+                    title=title,
+                    serial=serial,
+                    rel_date=rel_date,
+                    format_type=format_type,
+                    upc=upc,
+                    tracks=tracks
+                )
+                if dest_path:
+                    self.send_json_response({
+                        "success": True,
+                        "serial": serial_out,
+                        "project_path": str(dest_path),
+                        "masters_dir": str(dest_path / "01_Masters"),
+                        "manifest_file": str(dest_path / "release_manifest.json"),
+                        "message": f"Release project structure successfully initialized on disk."
+                    })
+                else:
+                    self.send_json_response({
+                        "success": False,
+                        "error": "Failed to deploy release structure."
+                    }, status=500)
+            except Exception as e:
+                self.send_json_response({
+                    "success": False,
+                    "error": str(e)
+                }, status=500)
+            return
 
         # Route: Run Acoustic DSP Telemetry
         if parsed.path == "/api/analyze":

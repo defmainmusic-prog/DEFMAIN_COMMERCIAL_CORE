@@ -26,6 +26,7 @@ VISUAL_PROCESSING_DIR = AUTOMATION_ENGINE_DIR / "visual_processing"
 RELEASE_DIRS = [
     OPERATIONS_DIR / "SRC_Records" / "Releases",
     OPERATIONS_DIR / "Neural_State_Sound" / "Releases",
+    OPERATIONS_DIR / "Releases",
 ]
 
 # Label-specific template pool directories
@@ -109,7 +110,7 @@ def resolve_template_pool(serial: str) -> Path:
     return TEMPLATE_POOL["SRC"]
 
 
-def resolve_label_info(serial: str) -> tuple[Path, Path, str]:
+def resolve_label_info(serial: str, label_name: str | None = None) -> tuple[Path, Path, str]:
     """Returns (output_label_dir, template_dir, active_label) for a given serial."""
     clean = serial.upper().strip()
     if clean.startswith("SRC"):
@@ -125,7 +126,12 @@ def resolve_label_info(serial: str) -> tuple[Path, Path, str]:
             "Neural State Sound (NSS)",
         )
     else:
-        raise ValueError(f"Unknown label prefix in serial: {serial}")
+        # Default commercial release routing for T - 1 / DCC
+        return (
+            OPERATIONS_DIR / "Releases",
+            LABEL_TEMPLATES.get("SRC", TEMPLATE_DIR_BASE / "_TEMPLATE_FOLDER_SRC"),
+            label_name or "T - 1 Commercial Core",
+        )
 
 
 # ---------------------------------------------------------------------------
