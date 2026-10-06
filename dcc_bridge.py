@@ -141,7 +141,7 @@ def run_server(port=PORT):
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", port), handler) as httpd:
         print(f"============================================================")
-        print(f"  DCC // COMMERCIAL ENGINE BRIDGE ACTIVE")
+        print(f"  T - 1 // AUTONOMOUS LABEL ENGINE BRIDGE ACTIVE")
         print(f"  UI Dashboard URL: http://localhost:{port}")
         print(f"  Directory:        {UI_DIR}")
         print(f"============================================================")

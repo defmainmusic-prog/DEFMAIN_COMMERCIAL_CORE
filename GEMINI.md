@@ -20,5 +20,6 @@
 - **DCC (`DEFMAIN_COMMERCIAL_CORE`)**:
   - **Directory**: `/Users/dmm/Documents/DEFMAIN_COMMERCIAL_CORE`
   - **Git Branch**: `DEFMAIN_COMMERCIAL_CORE` (Remote: `origin/DEFMAIN_COMMERCIAL_CORE`)
+  - **Product Brand**: **`T - 1`** (Autonomous Label Operating System & Audio Engine)
   - **Purpose**: Standalone, white-label commercial core product, agnostic pipeline, and visual playground.
 
